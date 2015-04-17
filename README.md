@@ -12,13 +12,17 @@ upvote, downvote or leave reviews for posts once they login
 
 ## Team Member
 
-Pengyuan Bian
+###**Qiuhan Ding**
+<img src="./photos/qd.jpg" height="240">
 
-Qiuhan Ding
+###**Meng Li**
+<img src="./photos/ml.jpg" height="240">
 
-Meng Li
+###**Pengyuan Bian**
+<img src="./photos/pb.jpg" height="240">
 
-Tielong Su
+###**Tielong Su**
+<img src="./photos/ts.jpg" height="240">
 
 ## Link to pivotal tracker
 
