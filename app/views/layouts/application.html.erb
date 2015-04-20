@@ -7,8 +7,29 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<div class="container">
+<div class="navbar-header">
+  <a class="navbar-brand" href="/">Home</a>
+  <a class="navbar-brand" href="/posts">Posts</a>
+  <a class="navbar-brand" href="/users/sign_up">Sign Up</a>
+</div>    
+</div>
+</nav>
+<div class="container">
+  
+<div class="row">
+  <div class="col-xs-9">
+      <%= yield %>
+    </div>
+    <div class="col-xs-3 bs-docs-sidebar">
+      <ul class="nav nav-list bs-docs-sidenav">
+	<li class="active"><a href="/"> Hot Posts</a></li>
+      </ul>
+    </div>
+    
+  </div>
+</div>
 
 </body>
 </html>
