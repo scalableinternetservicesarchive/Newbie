@@ -32,11 +32,14 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-#devise
+# devise
 gem 'devise', '~> 3.4.0'
 
-#bootstrap-css
+# bootstrap-css
 gem 'bootstrap-sass', '~> 3.3.4'
+
+# Use paperclip to allow image uploads
+gem 'paperclip', '~> 3.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

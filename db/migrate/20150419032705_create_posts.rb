@@ -8,6 +8,8 @@ class CreatePosts < ActiveRecord::Migration
       t.string :image_url
       t.integer :downvote_number
       t.integer :upvote_number
+      t.attachment :post_image
+
 
       t.timestamps null: false
     end

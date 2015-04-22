@@ -32,6 +32,10 @@
     <%= f.text_field :image_url %>
   </div>
   <div class="field">
+    <%= f.label :"OR, upload image" %><br>
+    <%= f.file_field :post_image %>
+  </div>
+  <div class="field">
     <%= f.label :downvote_number %><br>
     <%= f.number_field :downvote_number %>
   </div>
