@@ -39,7 +39,7 @@ gem 'devise', '~> 3.4.0'
 gem 'bootstrap-sass', '~> 3.3.4'
 
 # Use paperclip to allow image uploads
-gem 'paperclip', '~> 3.1'
+gem 'paperclip', :git => "git://github.com/thoughtbot/paperclip.git"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
