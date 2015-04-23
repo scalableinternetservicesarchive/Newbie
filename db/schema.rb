@@ -30,8 +30,12 @@ ActiveRecord::Schema.define(version: 20150419040219) do
     t.string   "image_url"
     t.integer  "downvote_number"
     t.integer  "upvote_number"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "post_image_file_name"
+    t.string   "post_image_content_type"
+    t.integer  "post_image_file_size"
+    t.datetime "post_image_updated_at"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "users", force: :cascade do |t|

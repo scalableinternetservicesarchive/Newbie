@@ -27,7 +27,7 @@
 
 <p>
   <strong>Post Image:</strong>
-  <%= @post.post_image.url %>
+  <%= image_tag @post.post_image.url(:thumb) %>
 </p>
 
 <p>
