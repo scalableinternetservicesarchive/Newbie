@@ -15,7 +15,6 @@
 
 body {
   position: relative;
-  padding-top: 40px;
 }
 
 /* Code in headings */
@@ -24,12 +23,17 @@ h3 code {
   font-weight: normal;
 }
 
+#content {
+  position: relative;
+  padding: 10px;
+}
 
 
 /* Tweak navbar brand link to be super sleek
 -------------------------------------------------- */
 
 body > .navbar {
+  position: relative;
   font-size: 13px;
 }
 
