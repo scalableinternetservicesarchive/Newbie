@@ -10,7 +10,7 @@
                 <% posts.each do |post| %>
                   <div class='col-md-4'>
                     <div class="thumbnail">
-                        <%= image_tag(post.image_url)%>
+                        <%= image_tag(post.post_image.url)%>
                         <div class="caption">
                           <span class="listing-title"><%= post.title %></span>
                         </div>
