@@ -34,7 +34,7 @@ class Users::ProfilesController < ApplicationController
 	private
 
 	def post_params
-      	params.require(:user).permit(:gender, :user_name)
+      	params.require(:user).permit(:gender, :user_name, :avatar)
     end
 
     def set_user

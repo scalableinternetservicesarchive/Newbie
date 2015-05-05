@@ -1,13 +1,17 @@
 <%= form_for(@user, url: users_profile_edit_path) do |f| %>
-	<div class="field">
-		<%= f.label :user_name %>
-		<%= f.text_field :user_name %>
-	</div>
-	<div class="field">
-		<%= f.label :gender %>
-		<%= f.select :gender, User::GENDER_TYPES %>
-	</div>
-	<div class="actions">
-		<%= f.submit %>
-	</div>
+    <div class="field">
+        <%= f.label :user_name %>
+        <%= f.text_field :user_name %>
+    </div>
+    <div class="field">
+        <%= f.label :gender %>
+        <%= f.select :gender, User::GENDER_TYPES %>
+    </div>
+    <div class="field">
+        <%= f.label :avatar %><br>
+        <%= f.file_field :avatar %>
+    </div>
+    <div class="actions">
+        <%= f.submit %>
+    </div>
 <% end %>
