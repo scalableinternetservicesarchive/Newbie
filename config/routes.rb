@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   get 'index/index'
 
-  devise_for :users
+  get 'users/profile/edit' => 'users/profiles#editProfile'
+  patch 'users/profile/edit' => 'users/profiles#updateProfile'
+  get 'users/profile' => 'users/profiles#showCurrentUserProfile'
+  get 'users/profile/:id' => 'users/profiles#showOtherUserProfile'
+  devise_for :users, controllers: {sessions: "users/sessions", registrations: "users/registrations" }
   resources :votes
   resources :comments
   resources :posts
