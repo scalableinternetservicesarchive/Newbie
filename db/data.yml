@@ -1,0 +1,125 @@
+
+---
+posts:
+  columns:
+  - id
+  - user_id
+  - title
+  - datetime
+  - content
+  - image_url
+  - downvote_number
+  - upvote_number
+  - post_image_file_name
+  - post_image_content_type
+  - post_image_file_size
+  - post_image_updated_at
+  - created_at
+  - updated_at
+  records: 
+  - - 5
+    - 2
+    - dim sum
+    - 2015-04-24 22:23:00.000000000 Z
+    - You can get an additional dish(limited to dim sum) free if you order more than
+      10 dishes!!
+    - ''
+    - 
+    - 
+    - 13.jpg
+    - image/jpeg
+    - 82611
+    - 2015-05-01 08:18:52.000000000 Z
+    - 2015-04-24 22:24:12.000000000 Z
+    - 2015-05-01 08:18:52.000000000 Z
+  - - 6
+    - 
+    - cupcakes special
+    - 2015-05-01 08:12:00.000000000 Z
+    - buy 1 get 1 free!!
+    - ''
+    - 
+    - 
+    - 2.jpg
+    - image/jpeg
+    - 46655
+    - 2015-05-01 08:13:41.000000000 Z
+    - 2015-05-01 08:13:41.000000000 Z
+    - 2015-05-01 08:13:41.000000000 Z
+  - - 7
+    - 3
+    - barbecue
+    - 2015-05-01 08:14:00.000000000 Z
+    - 20% off with Bruin Card!!
+    - ''
+    - 
+    - 
+    - 6.jpg
+    - image/jpeg
+    - 528338
+    - 2015-05-01 08:14:51.000000000 Z
+    - 2015-05-01 08:14:52.000000000 Z
+    - 2015-05-01 08:14:52.000000000 Z
+  - - 8
+    - 4
+    - Yummy Sushi
+    - 2015-05-01 08:14:00.000000000 Z
+    - Happy hours 4pm - 6pm everyday till May 15th!
+    - ''
+    - 
+    - 
+    - 8.jpg
+    - image/jpeg
+    - 327718
+    - 2015-05-01 08:16:09.000000000 Z
+    - 2015-05-01 08:16:09.000000000 Z
+    - 2015-05-01 08:16:09.000000000 Z
+  - - 9
+    - 5
+    - Ramen
+    - 2015-05-01 08:16:00.000000000 Z
+    - Best Ramen in LA! Upvote this post will get a coupon!
+    - ''
+    - 
+    - 
+    - 10.jpg
+    - image/jpeg
+    - 676067
+    - 2015-05-01 08:17:09.000000000 Z
+    - 2015-05-01 08:17:10.000000000 Z
+    - 2015-05-01 08:17:10.000000000 Z
+
+---
+users:
+  columns:
+  - id
+  - email
+  - encrypted_password
+  - reset_password_token
+  - reset_password_sent_at
+  - remember_created_at
+  - sign_in_count
+  - current_sign_in_at
+  - last_sign_in_at
+  - current_sign_in_ip
+  - last_sign_in_ip
+  - created_at
+  - updated_at
+  - user_name
+  - gender
+  records: 
+  - - 1
+    - dingqiuhan@gmail.com
+    - "$2a$10$4o.Vr2dZoD5k.PplfWQXoOWchBtO5tWRQ4Q4Kfuu02ZRoDu2Xm0A."
+    - 
+    - 
+    - 
+    - 2
+    - 2015-05-01 08:09:14.000000000 Z
+    - 2015-04-24 22:23:29.000000000 Z
+    - "::1"
+    - "::1"
+    - 2015-04-24 22:23:29.000000000 Z
+    - 2015-05-01 08:09:14.000000000 Z
+    - 
+    - false

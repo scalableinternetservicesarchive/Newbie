@@ -3,6 +3,11 @@ class IndexController < ApplicationController
     @posts = Post.all
   end
 
+  # Get /search
+  def search
+    @results = Post.search(params[:search])
+  end
+
   def about
   end
 
