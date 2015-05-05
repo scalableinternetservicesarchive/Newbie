@@ -4,5 +4,7 @@ class Post < ActiveRecord::Base
     validates_attachment_content_type :post_image, :content_type => ["image/jpg",
                                                                      "image/jpeg", "image/png", "image/gif"]
 
+    acts_as_taggable
+
     after_save ThinkingSphinx::RealTime.callback_for(:post)
 end

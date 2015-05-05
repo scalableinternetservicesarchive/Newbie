@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   get 'index/index'
 
   get 'users/profile/edit' => 'users/profiles#editProfile'
@@ -9,6 +10,7 @@ Rails.application.routes.draw do
   resources :votes
   resources :comments
   resources :posts
+  resources :tag
   root 'index#index'
 
   get 'about' => 'index#about'

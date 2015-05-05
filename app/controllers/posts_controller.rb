@@ -71,7 +71,9 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:user_id, :title, :datetime, :content, :image_url, :downvote_number, :upvote_number, :post_image).merge(user_id: current_user.id)
+      params.require(:post).permit(:user_id, :title, :datetime, :content,
+                                   :image_url, :downvote_number, :upvote_number,
+                                   :post_image, :tag_list).merge(user_id: current_user.id)
     end
 
     def correct_user
