@@ -21,7 +21,7 @@
         <td><%= post.datetime %></td>
         <td><%= post.content %></td>
         <td><%= post.image_url %></td>
-        <td><%= post.post_image.url(:thumb) %></td>
+        <td><%= image_tag post.post_image.url(:thumb) %></td>
         <td><%= post.downvote_number %></td>
         <td><%= post.upvote_number %></td>
         <td><%= link_to 'Show', post %></td>
