@@ -1,14 +1,16 @@
 class Users::ProfilesController < ApplicationController
 	before_action :set_user, only: [:showCurrentUserProfile, :editProfile, :updateProfile]
 	before_filter :authenticate_user!
+
 	def showCurrentUserProfile
-		
 		respond_to do |format|
 			format.html {render "users/profiles/profile"}
 		end
 	end
 
 	def showOtherUserProfile
+		@user = User.find(params[:id])
+		@id = params[:id].to_s
 		respond_to do |format|
 			format.html {render "users/profiles/profile_other"}
 		end
@@ -34,7 +36,7 @@ class Users::ProfilesController < ApplicationController
 	private
 
 	def post_params
-      	params.require(:user).permit(:gender, :user_name)
+      	params.require(:user).permit(:gender, :user_name, :avatar)
     end
 
     def set_user

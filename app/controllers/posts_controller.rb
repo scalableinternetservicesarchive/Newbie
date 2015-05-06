@@ -2,6 +2,18 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!, except: [:show, :index, :destroy]
   before_filter :correct_user, only: [:edit, :update, :destroy]
+
+  def listUserPost
+    @posts = Post.where(user_id: params[:id])
+  end
+
+  def listOwnPost
+    @posts = Post.where(user_id: current_user.id)
+    respond_to do |format|
+      format.html {render :listUserPost}
+    end
+  end
+
   # GET /posts
   # GET /posts.json
   def index
@@ -11,6 +23,7 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @comments = Comment.where(post_id: @post.id)
   end
 
   # GET /posts/new
@@ -71,13 +84,15 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:user_id, :title, :datetime, :content, :image_url, :downvote_number, :upvote_number, :post_image).merge(user_id: current_user.id)
+      params.require(:post).permit(:user_id, :title, :datetime, :content,
+                                   :image_url, :downvote_number, :upvote_number,
+                                   :post_image, :tag_list).merge(user_id: current_user.id)
     end
 
     def correct_user
       if @post.user_id != current_user.id
         respond_to do |format|
-          format.html {redirect_to posts_url, notice: "No authority!"+ "|" +@post.user_id.to_s + "|" + current_user.id.to_s}
+          format.html {redirect_to posts_url, notice: "No authority!"}
             format.json {head :no_content}
         end
       end

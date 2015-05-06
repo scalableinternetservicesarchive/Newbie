@@ -1,0 +1,28 @@
+<table>
+<% @comments.each do |comment| %>
+	<tr>
+	  <td>
+	  <strong>User:</strong>
+	  <%= comment.user_id %>
+	  </td>
+	  <td>
+	  <strong>Content:</strong>
+	  <%= comment.content %>
+	  </td>
+	  <td>
+	  <%= link_to 'Delete', [comment.post, comment], method: :delete%>
+	  </td>
+	</tr>
+<%end%>
+</table>
+
+<h2>Add a comment:</h2>
+<%= form_for([@post, @post.comments.build]) do |f| %>
+  <p>
+    <%= f.label :content %><br>
+    <%= f.text_area :content %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

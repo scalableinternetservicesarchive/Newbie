@@ -22,13 +22,13 @@
 
 <p>
   <strong>Image url:</strong>
-  <%= @post.image_url %>
+  <%= image_tag @post.image_url %>
 </p>
 
 <p>
   <strong>Post Image:</strong>
   <%= image_tag @post.post_image.url(:thumb) %>
-</p>
+  </p>
 
 <p>
   <strong>Downvote number:</strong>
@@ -40,5 +40,13 @@
   <%= @post.upvote_number %>
 </p>
 
+<p>
+  <strong>Tags:</strong>
+  <%= @post.tag_list %>
+<p>
+
 <%= link_to 'Edit', edit_post_path(@post) %> |
 <%= link_to 'Back', posts_path %>
+
+<%= render 'comments' %>
+

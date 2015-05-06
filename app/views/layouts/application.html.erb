@@ -57,7 +57,6 @@
 </div>
 </header>
 <div id="content" class="container-fluid">
-  
   <div class="row">
     <div class="col-xs-9">
       <% if notice %>
@@ -70,8 +69,16 @@
     </div>
     <div class="col-xs-3 bs-docs-sidebar">
       <ul class="nav nav-list bs-docs-sidenav">
-	<li><%= link_to 'Hot Posts', posts_path%></li>
+          <li><%= link_to 'Hot Posts', posts_path%></li>
       </ul>
+
+       <ul class="nav nav-list bs-docs-sidenav">
+            <div id="tag_cloud">
+                <% tag_cloud Post.tag_counts, %w{css1 css2 css3 css4} do |tag, css_class| %>
+                    <%= link_to tag.name, tag_path(tag.id), class: css_class %>
+                <% end %>
+            </div>
+        </ul>
     </div>
   </div>
 </div>
