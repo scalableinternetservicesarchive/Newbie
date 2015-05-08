@@ -17,7 +17,10 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
+    @temp = request.remote_ip
     @posts = Post.all
+      #Post.near("Westwood, Los Angeles, California, United States", 20, order: :distance)
+      #Post.all
   end
 
   # GET /posts/1

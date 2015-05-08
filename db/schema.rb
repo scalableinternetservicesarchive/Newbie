@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150505070130) do
+ActiveRecord::Schema.define(version: 20150508212940) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "post_id",    limit: 4
@@ -28,14 +28,17 @@ ActiveRecord::Schema.define(version: 20150505070130) do
     t.datetime "datetime"
     t.text     "content",                 limit: 65535
     t.string   "image_url",               limit: 255
-    t.integer  "downvote_number",         limit: 4
-    t.integer  "upvote_number",           limit: 4
     t.string   "post_image_file_name",    limit: 255
     t.string   "post_image_content_type", limit: 255
     t.integer  "post_image_file_size",    limit: 4
     t.datetime "post_image_updated_at"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.string   "latitude",                limit: 255
+    t.string   "longitude",               limit: 255
+    t.string   "ipaddress",               limit: 255
+    t.integer  "downvote_number",         limit: 4,     default: 0
+    t.integer  "upvote_number",           limit: 4,     default: 0
   end
 
   create_table "taggings", force: :cascade do |t|
