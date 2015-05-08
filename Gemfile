@@ -41,7 +41,6 @@ gem 'bootstrap-sass', '~> 3.3.4'
 # Use paperclip to allow image uploads
 gem 'paperclip', :git => "git://github.com/thoughtbot/paperclip.git"
 
-gem 'mysql2',          '~> 0.3.13', :platform => :ruby
 gem 'jdbc-mysql',      '~> 5.1.28', :platform => :jruby
 gem 'thinking-sphinx', '~> 3.1.0'
 
@@ -60,5 +59,7 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  
+  gem 'mysql2',          '~> 0.3.13', :platform => :ruby
 end
 
