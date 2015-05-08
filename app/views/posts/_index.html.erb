@@ -20,9 +20,9 @@
         <td><%= image_tag post.post_image.url(:thumb) %></td>
         <td id = "<%= post.id %> downvote"><%= post.downvote_number %></td>
         <td id = "<%= post.id %> upvote"><%= post.upvote_number %></td>
-        <td> <%= button_to edit_post_path(post), :params=>{up: true},
+        <td> <%= button_to 'votepost/up/' + post.id.to_s, 
         :method => :get, :remote=> true, :class=>"btn btn-default" do%><span class="glyphicon glyphicon-thumbs-up"></span><%end%></td>
-        <td> <%= button_to edit_post_path(post), :params=>{up: false},
+        <td> <%= button_to 'votepost/down/' + post.id.to_s, 
         :method => :get, :remote=> true, :class=>"btn btn-default" do
         %><span class="glyphicon glyphicon-thumbs-down"></span><%end%></td>
         <td>

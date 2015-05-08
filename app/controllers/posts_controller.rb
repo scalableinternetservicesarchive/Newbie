@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!, except: [:show, :index, :destroy]
-  before_filter :correct_user, only: [:update, :destroy]
+  before_filter :correct_user, only: [:edit, :update, :destroy]
 
   def listUserPost
     @posts = Post.where(user_id: params[:id])
@@ -33,9 +33,9 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
+  end
+  def upvote
     @post = Post.find(params[:id]) 
-
-    if params[:up] == "true"
 
       @vote = Vote.find_by(post_id: @post.id, user_id: current_user.id, label: true)
       if @vote.nil? 
@@ -49,9 +49,15 @@ class PostsController < ApplicationController
         Vote.destroy(@vote.id)
       end
 
-    else
+    respond_to do |format|
+      format.html { render :edit }
+      format.js {render 'edit.js.erb'}
+    end
+  end
 
-      @vote = Vote.find_by(post_id: @post.id, user_id: current_user.id, label: false)
+  def downvote 
+    @post = Post.find(params[:id])
+    @vote = Vote.find_by(post_id: @post.id, user_id: current_user.id, label: false)
       if @vote.nil? 
         @post.downvote_number += 1 
         @post.save
@@ -63,12 +69,9 @@ class PostsController < ApplicationController
         @post.save
         Vote.destroy(@vote.id)
       end
-
-    end
-
     respond_to do |format|
       format.html { render :edit }
-      format.js
+      format.js {render 'edit.js.erb'}
     end
   end
   # POST /posts
