@@ -39,7 +39,8 @@ class PostsController < ApplicationController
   end
   def upvote
     @post = Post.find(params[:id]) 
-
+    @d_vote = Vote.find_by(post_id: @post.id, user_id: current_user.id, label: false)
+    if @d_vote.nil?
       @vote = Vote.find_by(post_id: @post.id, user_id: current_user.id, label: true)
       if @vote.nil? 
         @post.upvote_number += 1 
@@ -51,7 +52,7 @@ class PostsController < ApplicationController
         @post.save
         Vote.destroy(@vote.id)
       end
-
+    end
     respond_to do |format|
       format.html { render :edit }
       format.js {render 'edit.js.erb'}
@@ -60,6 +61,8 @@ class PostsController < ApplicationController
 
   def downvote 
     @post = Post.find(params[:id])
+    @u_vote = Vote.find_by(post_id: @post.id, user_id: current_user.id, label: true)
+    if @u_vote.nil?
     @vote = Vote.find_by(post_id: @post.id, user_id: current_user.id, label: false)
       if @vote.nil? 
         @post.downvote_number += 1 
@@ -72,6 +75,7 @@ class PostsController < ApplicationController
         @post.save
         Vote.destroy(@vote.id)
       end
+    end
     respond_to do |format|
       format.html { render :edit }
       format.js {render 'edit.js.erb'}
