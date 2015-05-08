@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   end
   get 'allpost/' => 'posts#listOwnPost'
   get 'allpost/:id' => 'posts#listUserPost'
+  get 'upvote' => 'posts#upvote'
   resources :tag
   root 'index#index'
 

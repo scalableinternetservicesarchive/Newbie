@@ -11,7 +11,7 @@ title: 'Post1',
 datetime: DateTime.parse('2015-04-18 20:27:05'),
 content: 'MyText',
 image_url: '1.jpg',
-downvote_number: 1,
+downvote_number: 2,
 upvote_number: 1)
 
 Post.create!(user_id: 1,
@@ -19,24 +19,24 @@ title: 'Post2',
 datetime: DateTime.parse('2015-04-18 20:27:05'),
 content: 'MyText',
 image_url: '2.jpg',
-downvote_number: 1,
-upvote_number: 1)
+downvote_number: 3,
+upvote_number: 2)
 
 Post.create!(user_id: 1,
 title: 'Post3',
 datetime: DateTime.parse('2015-04-18 20:27:05'),
 content: 'MyText',
 image_url: '3.jpg',
-downvote_number: 1,
-upvote_number: 1)
+downvote_number: 4,
+upvote_number: 3)
 
 Post.create!(user_id: 1,
 title: 'Post4',
 datetime: DateTime.parse('2015-04-18 20:27:05'),
 content: 'MyText',
 image_url: '5.jpg',
-downvote_number: 1,
-upvote_number: 1)
+downvote_number: 5,
+upvote_number: 4)
 
 Post.create!(user_id: 1,
 title: 'Post5',

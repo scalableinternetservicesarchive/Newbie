@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!, except: [:show, :index, :destroy]
-  before_filter :correct_user, only: [:edit, :update, :destroy]
+  before_filter :correct_user, only: [:update, :destroy]
 
   def listUserPost
     @posts = Post.where(user_id: params[:id])
@@ -33,8 +33,44 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-  end
+    @post = Post.find(params[:id]) 
 
+    if params[:up] == "true"
+
+      @vote = Vote.find_by(post_id: @post.id, user_id: current_user.id, label: true)
+      if @vote.nil? 
+        @post.upvote_number += 1 
+        @post.save
+        @new_vote = Vote.new(post_id: @post.id, user_id: current_user.id, label: true)
+        @new_vote.save
+      else
+        @post.upvote_number -= 1
+        @post.save
+        Vote.destroy(@vote.id)
+      end
+
+    else
+
+      @vote = Vote.find_by(post_id: @post.id, user_id: current_user.id, label: false)
+      if @vote.nil? 
+        @post.downvote_number += 1 
+        @post.save
+        @new_vote = Vote.new(post_id: @post.id, user_id: current_user.id, label: false)
+        @new_vote.save
+
+      else
+        @post.downvote_number -= 1
+        @post.save
+        Vote.destroy(@vote.id)
+      end
+
+    end
+
+    respond_to do |format|
+      format.html { render :edit }
+      format.js
+    end
+  end
   # POST /posts
   # POST /posts.json
   def create

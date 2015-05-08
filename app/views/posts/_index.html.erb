@@ -22,10 +22,12 @@
         <td><%= post.content %></td>
         <td><%= post.image_url %></td>
         <td><%= image_tag post.post_image.url(:thumb) %></td>
-        <td><%= post.downvote_number %></td>
-        <td><%= post.upvote_number %></td>
+        <td id = "<%= post.id %> downvote"><%= post.downvote_number %></td>
+        <td id = "<%= post.id %> upvote"><%= post.upvote_number %></td>
         <td><%= link_to 'Show', post %></td>
         <td><%= link_to 'Edit', edit_post_path(post) %></td>
+        <td> <%= button_to 'Upvote', edit_post_path(post), params:{up: true}, :method => :get, remote: true %></td>
+        <td> <%= button_to 'Downvote', edit_post_path(post), params:{up: false}, :method => :get, remote: true %></td>
         <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
