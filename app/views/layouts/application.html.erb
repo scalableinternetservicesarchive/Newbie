@@ -67,18 +67,17 @@
       <% end %>
       <%= yield %>
     </div>
-    <div class="col-xs-3 bs-docs-sidebar">
+    <div class="col-xs-3">
+      <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top">
       <ul class="nav nav-list bs-docs-sidenav">
           <li><%= link_to 'Hot Posts', posts_path%></li>
-      </ul>
-
-       <ul class="nav nav-list bs-docs-sidenav">
-            <div id="tag_cloud">
-                <% tag_cloud Post.tag_counts, %w{css1 css2 css3 css4} do |tag, css_class| %>
-                    <%= link_to tag.name, tag_path(tag.id), class: css_class %>
+          <li id="tag_cloud">
+                <% tag_cloud Post.tag_counts, %w{} do |tag| %>
+                    <a href="/tag/<%=tag.id%>"><%=tag.name%> <span class="badge"><%= Post.tagged_with(tag.name).count%></span></a>
                 <% end %>
-            </div>
-        </ul>
+            </li>
+          </ul>
+          </nav>
     </div>
   </div>
 </div>

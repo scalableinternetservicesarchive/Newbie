@@ -1,11 +1,9 @@
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
       <th>User</th>
       <th>Title</th>
       <th>Datetime</th>
-      <th>Content</th>
-      <th>Image url</th>
       <th>Post Image</th>
       <th>Downvote number</th>
       <th>Upvote number</th>
@@ -17,21 +15,30 @@
     <% @posts.each do |post| %>
       <tr>
         <td><%= post.user_id %></td>
-        <td><%= post.title %></td>
+        <td><%= link_to post.title, post %></td>
         <td><%= post.datetime %></td>
-        <td><%= post.content %></td>
-        <td><%= post.image_url %></td>
         <td><%= image_tag post.post_image.url(:thumb) %></td>
         <td id = "<%= post.id %> downvote"><%= post.downvote_number %></td>
         <td id = "<%= post.id %> upvote"><%= post.upvote_number %></td>
-        <td><%= link_to 'Show', post %></td>
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td> <%= button_to 'Upvote', edit_post_path(post), params:{up: true}, :method => :get, remote: true %></td>
-        <td> <%= button_to 'Downvote', edit_post_path(post), params:{up: false}, :method => :get, remote: true %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td> <%= button_to edit_post_path(post), :params=>{up: true},
+        :method => :get, :remote=> true, :class=>"btn btn-default" do%><span class="glyphicon glyphicon-thumbs-up"></span><%end%></td>
+        <td> <%= button_to edit_post_path(post), :params=>{up: false},
+        :method => :get, :remote=> true, :class=>"btn btn-default" do
+        %><span class="glyphicon glyphicon-thumbs-down"></span><%end%></td>
+        <td>
+          <%= link_to post,
+	                            :method=>:delete, :data => { :confirm =>
+          'Are you sure?' }  do %> <span class="glyphicon glyphicon-remove"></span><%end%>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
+<nav>
+  <ul class="pager">
+    <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
+    <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
+  </ul>
+</nav>
