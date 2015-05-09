@@ -81,6 +81,7 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     post_params[:user_id] = current_user.id
+    post_params[:ipaddress] = request.ip
     @post = Post.new(post_params)
 
     respond_to do |format|

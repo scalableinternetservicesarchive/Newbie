@@ -1,38 +1,55 @@
 <table class="table table-hover">
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Title</th>
-      <th>Datetime</th>
-      <th>Post Image</th>
-      <th>Downvote number</th>
-      <th>Upvote number</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
     <% @posts.each do |post| %>
-      <tr>
-        <td><%= post.user_id %></td>
-        <td><%= link_to post.title, post %></td>
-        <td><%= post.datetime %></td>
-        <td><%= image_tag post.post_image.url(:thumb) %></td>
-        <td id = "<%= post.id %> downvote"><%= post.downvote_number %></td>
-        <td id = "<%= post.id %> upvote"><%= post.upvote_number %></td>
-        <td> <%= button_to 'votepost/up/' + post.id.to_s, 
-        :method => :get, :remote=> true, :class=>"btn btn-default" do%><span class="glyphicon glyphicon-thumbs-up"></span><%end%></td>
-        <td> <%= button_to 'votepost/down/' + post.id.to_s, 
-        :method => :get, :remote=> true, :class=>"btn btn-default" do
-        %><span class="glyphicon glyphicon-thumbs-down"></span><%end%></td>
-        <td>
-          <%= link_to post,
-	                            :method=>:delete, :data => { :confirm =>
-          'Are you sure?' }  do %> <span class="glyphicon glyphicon-remove"></span><%end%>
+    <tr>
+      <td rowspan="3" class="postTableLeft">
+          <div class="row">
+            <%= image_tag post.post_image.url, :class=>"imgLg" %>
+          </div>
+      </td>
+      <td colspan="2" class="titleField">
+        <h4><%= link_to post.title, post %></h4>
+      </td>
+      <td>
+        <%=post.datetime.to_formatted_s(:short) %>
         </td>
-      </tr>
+      <td>
+        <div class="deleteBtn">
+        <%= link_to post,
+	                            :method=>:delete, :data => { :confirm => 'Are you sure?' }  do %> <span class="glyphicon
+	                                          glyphicon-remove"></span><%end%></div>
+      </td>
+    </tr>
+    <tr class="postContent">
+      <td colspan="4">
+          <%=post.content%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= button_to '/votepost/up/' + post.id.to_s, 
+        :method => :get, :remote=> true, :class=>"btn btn-default
+        btn-noborder" do%><span class="glyphicon
+        glyphicon-thumbs-up"></span> (<span id = "<%= post.id %> upvote"><%= post.upvote_number %></span>)<%end%>
+      </td>
+      <td>
+           <%= button_to '/votepost/down/' + post.id.to_s, 
+        :method => :get, :remote=> true, :class=>"btn btn-default btn-noborder" do %><span class="glyphicon glyphicon-thumbs-down"></span>
+        (<span id = "<%= post.id %> downvote"><%= post.downvote_number%></span>)<%end%>
+      </td>
+      <td>
+            <button class="btn btn-default btn-noborder"><span class="glyphicon
+                                                        glyphicon-star"></span>
+                                                        (0) </button>
+            
+      </td>
+      <td>
+        <button class="btn btn-default
+                       btn-noborder"><span class="glyphicon
+                                                  glyphicon-edit"></span> (<%=post.getComments().count%>) </button>
+            
+      </td>
+    </tr>
     <% end %>
-  </tbody>
 </table>
 
 <br>

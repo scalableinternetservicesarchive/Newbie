@@ -87,6 +87,7 @@ GEM
     geocoder (1.2.8)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
+    gmaps4rails (2.1.2)
     i18n (0.7.0)
     innertube (1.1.0)
     jbuilder (2.2.13)
@@ -201,10 +202,11 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   devise (~> 3.4.0)
   geocoder
+  gmaps4rails
   jbuilder (~> 2.0)
   jdbc-mysql (~> 5.1.28)
   jquery-rails
-  mysql2 (~> 0.3.13)
+  mysql2
   paperclip!
   rails (= 4.2.1)
   sass-rails (~> 5.0)
