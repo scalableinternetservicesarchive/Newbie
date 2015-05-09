@@ -14,8 +14,8 @@ class Post < ActiveRecord::Base
 
     after_save ThinkingSphinx::RealTime.callback_for(:post)
 
-    #def default_values
-      #self.downvote_number = 0
-      #self.upvote_number = 0
-    #end
+    def getComments()
+      @comments = Comment.where(post_id: self.id)
+    end
+
 end
