@@ -204,7 +204,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jdbc-mysql (~> 5.1.28)
   jquery-rails
-  mysql2 (~> 0.3.13)
+  mysql2
   paperclip!
   rails (= 4.2.1)
   sass-rails (~> 5.0)
