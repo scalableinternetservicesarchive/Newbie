@@ -9,10 +9,15 @@
               <div class='row'>
                 <% posts.each do |post| %>
                   <div class='col-md-4'>
-                    <div class="thumbnail">
-                        <%= link_to image_tag(post.post_image.url), post%>
+                      <div class="thumbnail">
+                        <%= if File.exists? post.post_image.url
+                                link_to image_tag(post.post_image.url), post
+                            else
+                                link_to image_tag("default.png"), post
+                            end
+                        %>
                         <div class="caption">
-                            <%= link_to post.title, post%>
+                            <%= link_to post.title, post %>
                         </div>
                       </div>
                     </div>
