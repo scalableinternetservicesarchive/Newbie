@@ -14,6 +14,7 @@ class PostsController < ApplicationController
     end
   end
 
+
   # GET /posts
   # GET /posts.json
   def index
@@ -27,6 +28,28 @@ class PostsController < ApplicationController
   # GET /posts/1.json
   def show
     @comments = Comment.where(post_id: @post.id)
+  end
+
+
+  def comments
+    @comment = Comment.find(params[:id])
+    @post = Post.find(params[:post_id])
+    if current_user.id == @post.user_id && (!@comment.read)
+      @comment.read = true
+      @comment.save
+      get_unread
+    end
+  end
+
+  def allUnreadComments
+    @posts = Post.where(user_id: current_user.id)
+    @unread_comm = Hash.new
+    @posts.each do |p|
+      @tmp = Comment.where(post_id: p.id, read: false)
+      if @tmp.size>0
+        @unread_comm[p] = @tmp.size
+      end
+    end
   end
 
   # GET /posts/new

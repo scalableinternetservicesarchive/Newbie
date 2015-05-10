@@ -1,0 +1,13 @@
+<table class="table table-hover">
+<%@unread_comm.each do |post, unread_count|%>
+  <tr>
+    <td>
+            
+      
+      <div class="col-xs-20"> <%=link_to post.title+"  "+unread_count.to_s, post %></div>
+  
+
+    </td>
+  </tr>
+<%end%>
+</table>
