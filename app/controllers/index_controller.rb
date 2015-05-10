@@ -1,11 +1,12 @@
 class IndexController < ApplicationController
   def index
-    @posts = Post.all
+    @posts = Post.order(:datetime)
   end
 
   # Get /search
   def search
-    @results = Post.search(params[:search])
+    @posts = Post.search(params[:search])
+    @keyword = params[:search]
   end
 
   def about
