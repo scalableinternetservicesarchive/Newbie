@@ -9,7 +9,11 @@
 </p>
 
 <p>
-  <strong>avatar:</strong>
-  <%= image_tag @user.avatar.url(:thumb) %>
+<strong>avatar:</strong>
+    <%= if @user.avatar.file?
+            image_tag @user.avatar.url(:thumb)
+        else
+            image_tag "no_avatar.png"
+        end %>
 </p>
 

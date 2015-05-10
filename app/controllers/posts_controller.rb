@@ -109,6 +109,16 @@ class PostsController < ApplicationController
     end
   end
 
+  def favorite
+    @post = Post.find(params[:id])
+    if current_user.favorites.exists?(:id => params[:id])
+        current_user.favorites.delete(@post)
+        redirect_to :back, notice: 'removed ' + @post.title + ' from favorites'
+    else
+        current_user.favorites << @post
+        redirect_to :back, notice: @post.title + ' was successfully added to your favorites!'
+    end
+  end
   # DELETE /posts/1
   # DELETE /posts/1.json
   def destroy

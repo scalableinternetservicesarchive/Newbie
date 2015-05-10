@@ -1,0 +1,6 @@
+<h1>Favorites</h1>
+<% if @posts.count > 0 %>
+<%= render 'posts/index'%>
+<% else %>
+<p> You don't have any favorite posts yet! </p>
+<% end %>
