@@ -6,7 +6,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-    <%= if File.exists? @post.post_image.url
+    <%= if @post.post_image.file?
             image_tag @post.post_image.url(:medium)
         else
             image_tag "default.png", :class => "imgLg"
