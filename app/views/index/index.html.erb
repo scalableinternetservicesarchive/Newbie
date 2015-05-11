@@ -1,28 +1,21 @@
 <% content_for :title, "Hungry Foodies" %>
-<div class="posts">
-      <div class="container">
-        <div class="row">
-
-          <div class="col-md-8">
-            <% @posts.in_groups_of(3).each do |posts| %>
-              <% posts.select! {|x| !x.nil?} %>
-              <div class='row'>
-                <% posts.each do |post| %>
-                  <div class='col-md-4'>
-                    <div class="thumbnail">
-                        <%= link_to image_tag(post.post_image.url), post%>
-                        <div class="caption">
-                            <%= link_to post.title, post%>
-                        </div>
-                      </div>
-                    </div>
-                <% end %>
-              </div>
-            <% end %>
-
-          </div>
-        </div>
-
-      </div>
+<div class="container marketing">
+<% @posts.in_groups_of(3).each do |posts| %>
+<% posts.select! {|x| !x.nil?} %>
+<div class="row">
+      <% posts.each do |post| %>
+        <div class="col-xs-4">
+          <%= if post.post_image.file?
+                  link_to image_tag(post.post_image.url, class: 'postImage'), post
+              else
+                  link_to image_tag("default.png", class: 'postImage'), post
+              end
+          %>
+          <h2><%= post.title%></h2>
+          <p><%= post.content%></p>
+          <p><%= link_to "View details", post %></p>
+        </div><!-- /.span4 -->
+        <%end%>
+      </div><!-- /.row -->
+    <%end%>
     </div>
-

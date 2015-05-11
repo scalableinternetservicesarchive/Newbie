@@ -1,6 +1,7 @@
 class IndexController < ApplicationController
+  layout 'index'
   def index
-    @posts = Post.all
+    @posts = Post.last(9).reverse
   end
 
   # Get /search
