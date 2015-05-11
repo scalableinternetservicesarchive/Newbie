@@ -16,5 +16,6 @@
 !/log/.keep
 ./tmp
 ./config/development.sphinx.conf
+./db/sphinx
 
 .DS_Store
