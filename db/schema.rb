@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150510062443) do
+ActiveRecord::Schema.define(version: 20150511031455) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "post_id",    limit: 4
@@ -62,6 +62,9 @@ ActiveRecord::Schema.define(version: 20150510062443) do
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
+  create_table "unread_comments", force: :cascade do |t|
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
     t.string   "encrypted_password",     limit: 255, default: "", null: false
@@ -81,6 +84,7 @@ ActiveRecord::Schema.define(version: 20150510062443) do
     t.datetime "updated_at"
     t.string   "user_name",              limit: 255
     t.boolean  "gender",                 limit: 1
+    t.integer  "unread",                 limit: 4,   default: 0,  null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

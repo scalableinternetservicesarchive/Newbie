@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   
   def get_unread
   	if !current_user.nil?
+  	
   	@posts = Post.where(user_id: current_user.id)
   	@post_unread = Hash.new
   	@unread = 0
@@ -14,7 +15,10 @@ class ApplicationController < ActionController::Base
   		@tmp = Comment.where(post_id: p.id, read: false)
   		@unread += @tmp.size
   	end
+
+  	
     end
   end
+
 
 end
