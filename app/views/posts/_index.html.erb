@@ -3,10 +3,10 @@
     <tr>
       <td rowspan="3" class="postTableLeft">
           <div class="row">
-              <%= if post.post_image.exists?
-                    image_tag post.post_image.url, :class=>"imgLg"
-                  else
+              <%= if post.pictures.empty?
                     image_tag "default.png", :class => "imgLg"
+                  else
+                    link_to image_tag(post.pictures.first.image.url, :class=>"imgLg"), post
                   end %>
           </div>
       </td>
