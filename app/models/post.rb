@@ -1,10 +1,13 @@
 class Post < ActiveRecord::Base
   #before_save :default_values
+    # favorite posts
+    belongs_to :user
+    has_many :favorite_posts
+    has_many :favorited_by, through: :favorite_posts, source: :user
+
     has_many :comments
     has_many :votes
-    has_attached_file :post_image, :styles => { :thumb => "100x100>", :medium => "300x300>"}
-    validates_attachment_content_type :post_image, :content_type => ["image/jpg",
-                                                                     "image/jpeg", "image/png", "image/gif"]
+    has_many :pictures, :dependent => :destroy
 
     acts_as_taggable
 

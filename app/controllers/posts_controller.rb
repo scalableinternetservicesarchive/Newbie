@@ -90,6 +90,11 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
+        if params[:images]
+            params[:images].each { |image|
+                @post.pictures.create(image: image)
+            }
+        end
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
@@ -102,8 +107,15 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1
   # PATCH/PUT /posts/1.json
   def update
+    @post = Post.find(params[:id])
+
     respond_to do |format|
       if @post.update(post_params)
+          if params[:images]
+              params[:images].each { |image|
+              @post.pictures.create(image: image)
+          }
+          end
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
         format.json { render :show, status: :ok, location: @post }
       else
@@ -113,6 +125,16 @@ class PostsController < ApplicationController
     end
   end
 
+  def favorite
+    @post = Post.find(params[:id])
+    if current_user.favorites.exists?(:id => params[:id])
+        current_user.favorites.delete(@post)
+        redirect_to :back, notice: 'removed ' + @post.title + ' from favorites'
+    else
+        current_user.favorites << @post
+        redirect_to :back, notice: @post.title + ' was successfully added to your favorites!'
+    end
+  end
   # DELETE /posts/1
   # DELETE /posts/1.json
   def destroy
@@ -133,7 +155,7 @@ class PostsController < ApplicationController
     def post_params
       params.require(:post).permit(:user_id, :title, :datetime, :content,
                                    :image_url, :downvote_number, :upvote_number,
-                                   :post_image, :tag_list).merge(user_id: current_user.id)
+                                   :pictures, :image, :tag_list).merge(user_id: current_user.id)
     end
 
     def correct_user

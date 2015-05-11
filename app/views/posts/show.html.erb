@@ -3,15 +3,15 @@
     <h3 class="panel-title"><%= @post.title%></h3>
 </div>
 <div class="panel-body">
-<p id="notice"><%= notice %></p>
 
 <p>
-    <%= if File.exists? @post.post_image.url
-            image_tag @post.post_image.url(:medium)
-        else
-            image_tag "default.png", :class => "imgLg"
-        end
-    %><br>
+    <% if @post.pictures.empty? %>
+        <%= image_tag "default.png", :class => "imgLg" %>
+    <% else %>
+        <% @post.pictures.each do |pic|%>
+            <%= image_tag pic.image.url, :class => "imgLg" %>
+        <% end %>
+    <% end %> <br>
     <strong><%= @post.user_id %></strong><br>
     <strong><%= @post.datetime %></strong>
 </p>
@@ -19,11 +19,6 @@
 <p>
   <strong>Content:</strong>
   <%= @post.content %>
-</p>
-
-<p>
-  <strong>Image url:</strong>
-  <%= image_tag @post.image_url %>
 </p>
 
 

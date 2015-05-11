@@ -3,10 +3,10 @@
     <tr>
       <td rowspan="3" class="postTableLeft">
           <div class="row">
-              <%= if File.exist? post.post_image.url
-                    image_tag post.post_image.url, :class=>"imgLg"
-                  else
+              <%= if post.pictures.empty?
                     image_tag "default.png", :class => "imgLg"
+                  else
+                    link_to image_tag(post.pictures.first.image.url, :class=>"imgLg"), post
                   end %>
           </div>
       </td>
@@ -41,16 +41,16 @@
         (<span id = "<%= post.id %> downvote"><%= post.downvote_number%></span>)<%end%>
       </td>
       <td>
-            <button class="btn btn-default btn-noborder"><span class="glyphicon
-                                                        glyphicon-star"></span>
-                                                        (0) </button>
-            
+        <%= button_to favorite_post_path(post.id), :method => :put, :class => "btn btn-default
+            btn-noborder" do %><span class="glyphicon glyphicon-star"></span>
+            (<span><%= post.favorited_by.count %></span>)
+        <%end%>
       </td>
       <td>
-        <button class="btn btn-default
-                       btn-noborder"><span class="glyphicon
-                                                  glyphicon-edit"></span> (<%=post.getComments().count%>) </button>
-            
+        <%= button_to post_path(post), :method => :get, :class => "btn btn-default
+            btn-noborder" do %><span class="glyphicon glyphicon-edit"></span>
+            (<span><%=post.getComments().count%></span>)
+        <%end%>
       </td>
     </tr>
     <% end %>

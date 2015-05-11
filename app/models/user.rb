@@ -6,5 +6,9 @@ class User < ActiveRecord::Base
   GENDER_TYPES = ["Not telling","Male", "Female"]
   has_attached_file :avatar, :styles => {:thumb => "100x100>"}
   validates_attachment_content_type :avatar, :content_type => ["image/jpg",
-                                                                   "image/jpeg", "image/png", "image/gif"]
+                                                               "image/jpeg", "image/png", "image/gif"]
+
+  has_many :posts
+  has_many :favorite_posts
+  has_many :favorites, through: :favorite_posts, source: :post
 end

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :pictures
+  get 'favorite_post/show'
+
   get 'index/index'
 
   get 'users/profile/edit' => 'users/profiles#editProfile'
@@ -11,6 +14,7 @@ Rails.application.routes.draw do
   resources :votes
   resources :posts do
     resources :comments
+    put :favorite, on: :member
   end
   get 'allpost/' => 'posts#listOwnPost'
   get 'allpost/:id' => 'posts#listUserPost'
