@@ -16,11 +16,13 @@
       <td>
         <%=post.datetime.to_formatted_s(:short) %>
         </td>
-      <td>
+        <td>
+        <% if current_user %>
         <div class="deleteBtn">
         <%= link_to post,
                                 :method=>:delete, :data => { :confirm => 'Are you sure?' }  do %> <span class="glyphicon
-                                              glyphicon-remove"></span><%end%></div>
+                                        glyphicon-remove"></span><%end%></div>
+        <% end %>
       </td>
     </tr>
     <tr class="postContent">
