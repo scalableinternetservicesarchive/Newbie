@@ -18,8 +18,9 @@ ActiveRecord::Schema.define(version: 20150511031551) do
     t.integer  "user_id",    limit: 4
     t.text     "content",    limit: 65535
     t.datetime "datetime"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.boolean  "read",       limit: 1,     default: false
   end
 
   create_table "favorite_posts", force: :cascade do |t|
@@ -82,6 +83,9 @@ ActiveRecord::Schema.define(version: 20150511031551) do
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
+  create_table "unread_comments", force: :cascade do |t|
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
     t.string   "encrypted_password",     limit: 255, default: "", null: false
@@ -101,6 +105,7 @@ ActiveRecord::Schema.define(version: 20150511031551) do
     t.datetime "updated_at"
     t.string   "user_name",              limit: 255
     t.boolean  "gender",                 limit: 1
+    t.integer  "unread",                 limit: 4,   default: 0,  null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

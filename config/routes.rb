@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   get 'allpost/:id' => 'posts#listUserPost'
   get 'votepost/up/:id' => 'posts#upvote'
   get 'votepost/down/:id' => 'posts#downvote'
+  get 'comments/:id/:post_id' => 'posts#comments'
+  get 'allunreadcomments' => 'posts#allUnreadComments'
   resources :tag
   root 'index#index'
 

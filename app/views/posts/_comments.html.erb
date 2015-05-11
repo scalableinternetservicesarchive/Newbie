@@ -5,17 +5,20 @@
               <div class="panel-body">
 <table class="table table-hover">
 <% @comments.each do |comment| %>
+<% show_content = "" %>
+<%if comment.content.length<12 %>
+  <% show_content = comment.content%>
+<%else%>
+  <% show_content = comment.content[0..11]+"..."%>
+<%end%>
 	<tr>
 	  <td>
             
                 <div class="col-xs-12">
-      <div class="col-xs-3"><%= comment.findUser(comment.user_id).user_name %> </div>
-	  <div class="col-xs-6" rows = "5"><%= comment.content %></div>
-          <div class="col-xs-2"><%=comment.datetime%></div>
-          <div class="col-xs-1"><%= link_to [comment.post, comment],
-	                            :method=>:delete, :data => { :confirm =>
+      <div class="col-xs-3" id="<%= comment.id %>"><%= link_to show_content, '/comments/'+comment.id.to_s+"/"+@post.id.to_s, {:style => 'font-weight:bold;', :onclick => "this.style.font-weight='normal'"} %></div>
+      <div class="col-xs-1"><%= link_to [comment.post, comment],
+                              :method=>:delete, :data => { :confirm =>
           'Are you sure?' }  do %> <span class="glyphicon glyphicon-remove"></span><%end%></div>
-                </div>
 
 	  </td>
 	</tr>
