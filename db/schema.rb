@@ -11,16 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150511031551) do
+ActiveRecord::Schema.define(version: 20150512160946) do
 
   create_table "comments", force: :cascade do |t|
-    t.integer  "post_id",    limit: 4
-    t.integer  "user_id",    limit: 4
-    t.text     "content",    limit: 65535
+    t.integer  "post_id",          limit: 4
+    t.integer  "user_id",          limit: 4
+    t.text     "content",          limit: 65535
     t.datetime "datetime"
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.boolean  "read",       limit: 1,     default: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.boolean  "read",             limit: 1,     default: false
+    t.integer  "replyToCommentID", limit: 4
   end
 
   create_table "favorite_posts", force: :cascade do |t|

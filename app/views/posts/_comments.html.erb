@@ -22,9 +22,26 @@
             </div>
           </div> 
           <div class="col-xs-6">
-            <div class="scrollText">
+            <!-- <div class="scrollText"> -->
+              <% replyComment = [] %>
+              <% replyUser = [] %>
+              <% i = comment.replyToCommentID %>
+              <% while i != nil%>
+                <%c = @comments.where(id: i).first%>
+                <%u = c.findUser() %>
+                <%replyComment.push(c)%>
+                <%replyUser.push(u)%>
+                <%i = c.replyToCommentID%>
+              <%end%>
+              <%replyComment.zip(replyUser).reverse.each do |c, u|%>
+                <div>
+                  <%=u.user_name%>:
+                  <%=c.content%>
+                </div>
+              <%end%>
+
               <%=comment.content%>
-            </div>
+            <!-- </div> -->
           </div>
           <div class="col-xs-2"><%=comment.created_at.to_formatted_s(:short)  %></div>
           <div class="col-xs-1">
@@ -44,7 +61,15 @@
       </div>
       <div class="collapse" id="collapseComment<%=comment.id%>">
         <div class="well">
-          reply
+          <%= form_for([@post, @post.comments.build]) do |f| %>
+          <%= f.hidden_field :replyToCommentID, :value => comment.id %>
+          <p>
+            <%= f.text_area :content, :class=>"form-control", :rows=>"2" %>
+          </p>
+          <p>
+            <%= f.submit "Submit", :class=>"btn btn-default"%>
+          </p>
+          <% end %>
           </div>
       </div>
       </li>
