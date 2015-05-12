@@ -21,4 +21,7 @@ class Post < ActiveRecord::Base
       @comments = Comment.where(post_id: self.id)
     end
 
+    def getUser()
+      @user = User.find(self.user_id)
+    end
 end

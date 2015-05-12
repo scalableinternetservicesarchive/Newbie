@@ -1,45 +1,78 @@
 <div class="panel panel-info">
   <div class="panel-heading">
     <h3 class="panel-title"><%= @post.title%></h3>
+  </div>
+  <div class="panel-body">
+    <table class="table table-hover">
+      <% user = @post.getUser() %>
+      <tr>
+        <td class="col-xs-3">
+          <div class="row">
+            <%= if user.avatar.file?
+                image_tag(user.avatar.url(:thumb), class:'center-block')
+                else
+                image_tag("no_avatar.png", class:'center-block')
+                end %>
+          </div>
+          <div class="row text-center">
+            <%=user.user_name%>
+          </div>      
+        </td> 
+        <td class="col-xs-9">
+          <div class="row">
+          <% if not @post.pictures.empty? %>
+          <% @post.pictures.each do |pic|%>
+          <%= image_tag pic.image.url, :class => "imgLg center-block" %>
+          <% end %>
+          <% end %> <br>
+          </div>
+          <div class="row contentField">
+          <%= @post.content %>
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="2" class="col-xs-3">
+          Posted on:<br> <%= @post.datetime. to_formatted_s(:long) %>
+        </td>
+        <td class="row scrollText">
+          <span class="glyphicon glyphicon-tags"> </span> <%= @post.tag_list %></td>
+      </tr>
+
+      <tr>
+        <td class="row">
+          <div class="col-xs-2">
+            <%= button_to '/votepost/up/' + @post.id.to_s,  :method => :get, :remote=> true, :class=>"btn btn-default btn-noborder" do%><span class="glyphicon glyphicon-thumbs-up"></span> (<span id = "<%= @post.id %> upvote"><%= @post.upvote_number %></span>)<%end%>
+          </div>
+          <div class="col-xs-2">
+            <%= button_to '/votepost/down/' + @post.id.to_s, 
+                :method => :get, :remote=> true, :class=>"btn btn-default btn-noborder" do %><span class="glyphicon glyphicon-thumbs-down"></span>
+              (<span id = "<%= @post.id %> downvote"><%= @post.downvote_number%></span>)<%end%>
+            </div>
+            <div class="col-xs-2">
+              <%= button_to '/favorite/' + @post.id.to_s, :method => :get, :remote=>true, :class => "btn btn-default btn-noborder" do %>
+              <% if current_user and current_user.favorites.exists?(:id => @post.id)%>
+              <span id="<%=@post.id %>star" class="glyphicon glyphicon-star"></span>
+              <% else %>
+              <span id="<%=@post.id %>star" class="glyphicon glyphicon-star-empty"></span>
+              <% end %>
+                
+              (<span id = "<%=@post.id %>favorite"><%= @post.favorited_by.count %></span>)
+            <%end%>
+            </div>
+            <div class="col-xs-3">
+              <%= link_to edit_post_path(@post), :class=>"btn btn-default btn-noborder" do %>
+              <span class="glyphicon glyphicon-edit"></span> Edit
+              <%end%>
+            </div>
+            <div class="col-xs-3">
+              <%= link_to posts_path, :class=>"btn btn-default btn-noborder" do %>
+              <span class="glyphicon glyphicon-log-out"></span> Back
+              <%end%>
+            </div>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
-<div class="panel-body">
-
-<p>
-    <% if @post.pictures.empty? %>
-        <%= image_tag "default.png", :class => "imgLg" %>
-    <% else %>
-        <% @post.pictures.each do |pic|%>
-            <%= image_tag pic.image.url, :class => "imgLg" %>
-        <% end %>
-    <% end %> <br>
-    <strong><%= @post.user_id %></strong><br>
-    <strong><%= @post.datetime %></strong>
-</p>
-
-<p>
-  <strong>Content:</strong>
-  <%= @post.content %>
-</p>
-
-
-<p>
-  <strong>Downvotes:</strong>
-  <%= @post.downvote_number %>
-</p>
-
-<p>
-  <strong>Upvotes:</strong>
-  <%= @post.upvote_number %>
-</p>
-
-<p>
-  <strong>Tags:</strong>
-  <%= @post.tag_list %>
-<p>
-
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
-</div>
-</div>
-<%= render 'comments' %>
-
+  <%= render 'comments' %>
