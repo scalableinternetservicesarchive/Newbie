@@ -79,7 +79,6 @@ class PostsController < ApplicationController
       end
     end
     respond_to do |format|
-      format.html { render :edit }
       format.js {render 'edit.js.erb'}
     end
   end
@@ -102,10 +101,22 @@ class PostsController < ApplicationController
       end
     end
     respond_to do |format|
-      format.html { render :edit }
       format.js {render 'edit.js.erb'}
     end
   end
+
+  def favorite
+    @post = Post.find(params[:id])
+    if current_user.favorites.exists?(:id => params[:id])
+        current_user.favorites.delete(@post)
+    else
+        current_user.favorites << @post
+    end
+    respond_to do |format|
+      format.js { render 'edit.js.erb' }
+    end
+  end
+
   # POST /posts
   # POST /posts.json
   def create
@@ -150,16 +161,6 @@ class PostsController < ApplicationController
     end
   end
 
-  def favorite
-    @post = Post.find(params[:id])
-    if current_user.favorites.exists?(:id => params[:id])
-        current_user.favorites.delete(@post)
-        redirect_to :back, notice: 'removed ' + @post.title + ' from favorites'
-    else
-        current_user.favorites << @post
-        redirect_to :back, notice: @post.title + ' was successfully added to your favorites!'
-    end
-  end
   # DELETE /posts/1
   # DELETE /posts/1.json
   def destroy

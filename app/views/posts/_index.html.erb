@@ -17,7 +17,7 @@
         <%=post.datetime.to_formatted_s(:short) %>
         </td>
         <td>
-        <% if current_user %>
+        <% if current_user and current_user.id == post.user_id %>
         <div class="deleteBtn">
         <%= link_to post,
                                 :method=>:delete, :data => { :confirm => 'Are you sure?' }  do %> <span class="glyphicon
@@ -43,9 +43,16 @@
         (<span id = "<%= post.id %> downvote"><%= post.downvote_number%></span>)<%end%>
       </td>
       <td>
-        <%= button_to favorite_post_path(post.id), :method => :put, :class => "btn btn-default
-            btn-noborder" do %><span class="glyphicon glyphicon-star"></span>
-            (<span><%= post.favorited_by.count %></span>)
+        <%= button_to '/favorite/' + post.id.to_s, :method => :get,
+        :remote=>true, :class => "btn btn-default
+        btn-noborder" do %>
+                <% if current_user and current_user.favorites.exists?(:id => post.id)%>
+                <span id="<%=post.id %>star" class="glyphicon glyphicon-star"></span>
+                <% else %>
+                 <span id="<%=post.id %>star" class="glyphicon glyphicon-star-empty"></span>
+                 <% end %>
+                
+            (<span id = "<%=post.id %>favorite"><%= post.favorited_by.count %></span>)
         <%end%>
       </td>
       <td>
