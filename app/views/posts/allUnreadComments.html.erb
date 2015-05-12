@@ -4,7 +4,8 @@
     <td>
             
       
-      <div class="col-xs-20"> <%=link_to post.title+"  "+unread_count.to_s, post %></div>
+      <div class="col-xs-20"> <%= link_to post do %> <%=post.title%> <span class="badge"><%=unread_count%></span>
+      <% end %></div>
   
 
     </td>

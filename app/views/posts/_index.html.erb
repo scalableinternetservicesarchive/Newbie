@@ -20,14 +20,15 @@
         <% if current_user and current_user.id == post.user_id %>
         <div class="deleteBtn">
         <%= link_to post,
-                                :method=>:delete, :data => { :confirm => 'Are you sure?' }  do %> <span class="glyphicon
-                                        glyphicon-remove"></span><%end%></div>
+                                :method=>:delete, :data => { :confirm => 'Are you sure?' }  do %> <span class="glyphicon glyphicon-trash"></span><%end%></div>
         <% end %>
       </td>
     </tr>
     <tr class="postContent">
       <td colspan="4">
+        <div class="scrollText">
           <%=post.content%>
+          </div>
       </td>
     </tr>
     <tr>
@@ -57,7 +58,7 @@
       </td>
       <td>
         <%= button_to post_path(post), :method => :get, :class => "btn btn-default
-            btn-noborder" do %><span class="glyphicon glyphicon-edit"></span>
+            btn-noborder" do %><span class="glyphicon glyphicon-comment"></span>
             (<span><%=post.getComments().count%></span>)
         <%end%>
       </td>

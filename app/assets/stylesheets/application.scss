@@ -8,6 +8,7 @@
   Special styles for presenting Bootstrap's documentation and examples
 */
 
+/* Post table */
 .newPostBtn {
   margin-top: 10px;
   float:right
@@ -22,8 +23,14 @@
 }
 
 .postContent {
-  height:140px
+  height:140px;
 }
+
+.scrollText {
+  max-height:140px;
+  overflow: scroll;
+}
+
 .postTableLeft {
   width:250px;
   height:250px
@@ -35,6 +42,27 @@
 
 .btn-noborder {
   border:none
+}
+
+/* Comment table */
+.comment-link-bold {
+  font-weight: bold;
+}
+
+.comment-link-normal {
+  font-weight: normal;
+}
+
+.commentBtn {
+  visibility:hidden;
+  opacity:0;
+  float:right;
+  margin-right:20px;
+}
+
+.commentItem:hover .commentBtn {
+  visibility:visible;
+  opacity:1;
 }
 
 /* CUSTOMIZE THE CAROUSEL
