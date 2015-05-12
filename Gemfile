@@ -41,6 +41,10 @@ gem 'bootstrap-sass', '~> 3.3.4'
 # Use paperclip to allow image uploads
 gem 'paperclip', :git => "git://github.com/thoughtbot/paperclip.git"
 
+# Store images on Amazon S3
+gem 'aws-sdk', '< 2.0'
+gem 'fog'
+
 gem 'jdbc-mysql',      '~> 5.1.28', :platform => :jruby
 gem 'thinking-sphinx', '~> 3.1.0'
 
