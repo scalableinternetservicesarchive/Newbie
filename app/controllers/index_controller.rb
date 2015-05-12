@@ -4,12 +4,6 @@ class IndexController < ApplicationController
     @posts = Post.last(9).reverse
   end
 
-  # Get /search
-  def search
-    @posts = Post.search(params[:search])
-    @keyword = params[:search]
-  end
-
   def about
   end
 

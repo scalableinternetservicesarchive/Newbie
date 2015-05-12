@@ -32,6 +32,11 @@ class PostsController < ApplicationController
     @comments = Comment.where(post_id: @post.id)
   end
 
+  # Get /search
+  def search
+    @posts = Post.search(params[:search])
+    @keyword = params[:search]
+  end
 
   def comments
     @comment = Comment.find(params[:id])

@@ -23,12 +23,12 @@ Rails.application.routes.draw do
   get 'favorite/:id' => 'posts#favorite'
   get 'comments/:id/:post_id' => 'posts#comments'
   get 'allunreadcomments' => 'posts#allUnreadComments'
+  get 'search' => 'posts#search'
   resources :tag
   root 'index#index'
 
   get 'about' => 'index#about'
   get 'contact' => 'index#contact'
-  get 'search' => 'index#search'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
