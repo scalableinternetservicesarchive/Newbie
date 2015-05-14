@@ -1,0 +1,6 @@
+<h2 class="titleFont">Keyword Search: <%=@keyword%></h2>
+<% if @posts.count > 0 %>
+<%= render 'index' %>
+<% else %>
+  <p>This key word is not associated with any posts.</p>
+  <% end %>

@@ -8,11 +8,13 @@
       <tr>
         <td class="col-xs-3">
           <div class="row">
+            <div class="avatar center-block">
             <%= if user.avatar.file?
-                image_tag(user.avatar.url(:thumb), class:'center-block')
+                image_tag(user.avatar.url(:thumb), class:'imgSm')
                 else
-                image_tag("no_avatar.png", class:'center-block')
+                image_tag("no_avatar.png")
                 end %>
+            </div>
           </div>
           <div class="row text-center">
             <%= link_to user.user_name, "/users/profile/" + user.id.to_s%>
