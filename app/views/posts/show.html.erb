@@ -24,7 +24,7 @@
           <div class="row">
           <% if not @post.pictures.empty? %>
           <% @post.pictures.each do |pic|%>
-          <%= image_tag pic.image.url, :class => "imgLg center-block" %>
+          <%= image_tag pic.image.url(:medium), :class => "imgLg center-block" %>
           <% end %>
           <% end %> <br>
           </div>
