@@ -18,7 +18,7 @@
                 end %>
             </div>
             <div class="col-xs-12 text-center">
-              <%=user.user_name%>
+              <%= link_to user.user_name, "/users/profile/" + user.id.to_s%>
             </div>
           </div> 
           <div class="col-xs-6">

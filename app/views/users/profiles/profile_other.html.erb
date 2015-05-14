@@ -1,5 +1,7 @@
-<h2>User Profile</h2>
+<div class="col-xs-8 col-md-offset-2">
+<h2 class="titleFont">User Profile</h2>
 
 <%= render 'profile' %>
 
-<%= link_to 'All Posts', "/allpost/" + @id %>
+<%= link_to 'All Posts', "/allpost/" + @id, :class=>"btn btn-primary" %>
+</div>

@@ -1,19 +1,83 @@
-<p>
-  <strong>user name:</strong>
-  <%= @user.user_name %>
-</p>
 
-<p>
-  <strong>gender:</strong>
-  <%= @user.gender %>
-</p>
-
-<p>
-<strong>avatar:</strong>
+<table class="table table-hover profile-table">
+  <tr>
+    <td>
+    <strong>user name:</strong>
+    </td>
+    <td>
+    <%= @user.user_name %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <strong>avatar:</strong>
+    </td>
+    <td>
     <%= if @user.avatar.file?
             image_tag @user.avatar.url(:thumb)
         else
             image_tag "no_avatar.png"
         end %>
-</p>
-
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <strong>gender:</strong>
+    </td>
+    <td>
+    <% if @user.gender == nil %>
+      not telling
+    <% else %>
+      <%= @user.gender %>
+    <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <strong>Birthday:</strong>
+    </td>
+    <td>
+    <% if @user.birthday== nil %>
+      Not telling
+    <% else %>
+      <%= @user.birthday %>
+    <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <strong>Location:</strong>
+    </td>
+    <td>
+    <% if @user.location == nil %>
+      Not telling
+    <% else %>
+      <%= @user.location %>
+    <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <strong>post count:</strong>
+    </td>
+    <td>
+    <%= @postCount %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <strong>last log in at:</strong>
+    </td>
+    <td>
+    <%= @user.last_sign_in_at %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <strong>registration time:</strong>
+    </td>
+    <td>
+    <%= @user.created_at %>
+    </td>
+  </tr>
+</table>

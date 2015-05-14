@@ -3,6 +3,7 @@ class Users::ProfilesController < ApplicationController
 	before_filter :authenticate_user!
 
 	def showCurrentUserProfile
+		@postCount = Post.where(user_id: @user.id).count
 		respond_to do |format|
 			format.html {render "users/profiles/profile"}
 		end
@@ -11,6 +12,7 @@ class Users::ProfilesController < ApplicationController
 	def showOtherUserProfile
 		@user = User.find(params[:id])
 		@id = params[:id].to_s
+		@postCount = Post.where(user_id: @user.id).count
 		respond_to do |format|
 			format.html {render "users/profiles/profile_other"}
 		end
@@ -24,6 +26,14 @@ class Users::ProfilesController < ApplicationController
 	end
 
 	def updateProfile
+		if post_params[:gender] != nil
+			if post_params[:gender] == 'Male'
+				post_params[:gender] = true
+			else
+				post_params[:gender] = false
+			end
+		end
+	
 		respond_to do |format|
 			if @user.update(post_params)
 				format.html { redirect_to users_profile_path, notice: 'Profile was successfully updated.' }

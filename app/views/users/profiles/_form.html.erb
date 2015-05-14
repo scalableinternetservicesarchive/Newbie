@@ -1,17 +1,32 @@
+<div class="col-xs-8 col-md-offset-2">
+<h2 class="titleFont">Editing Profile</h2>
 <%= form_for(@user, url: users_profile_edit_path) do |f| %>
-    <div class="field">
-        <%= f.label :user_name %>
-        <%= f.text_field :user_name %>
-    </div>
-    <div class="field">
-        <%= f.label :gender %>
-        <%= f.select :gender, User::GENDER_TYPES %>
-    </div>
     <div class="field">
         <%= f.label :avatar %>
         <%= f.file_field :avatar %><br>
     </div>
-    <div class="actions">
-    <%= f.submit "Submit", :class=>"btn btn-default"%>
+    <div class="field">
+        <%= f.label :user_name %><br>
+        <%= f.text_field :user_name , class:"form-control"%>
+    </div>
+    <div class="field">
+        <%= f.label :gender %><br>
+        <%= f.select :gender, User::GENDER_TYPES %>
+    </div>
+    <div class="field">
+        <%= f.label :birthday %><br>
+        <%= f.datetime_select :birthday %>
+    </div>
+    <div class="field">
+        <%= f.label :location %><br>
+        <%= f.text_field :location , class:"form-control"%>
+    </div>
+    <br>
+    <div class="actions col-xs-3">
+        <%= f.submit "Submit", :class=>"btn btn-primary"%>
+    </div>
+    <div class="col-xs-3">
+        <%= link_to "Back", 'users/profile/' + @user.id.to_s, :class=>"btn btn-default" %>
     </div>
 <% end %>
+</div>
