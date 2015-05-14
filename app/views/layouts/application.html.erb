@@ -1,69 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href='http://fonts.googleapis.com/css?family=Kaushan+Script'
+rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet' type='text/css'>
   <title><%= yield(:title)%></title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
+
 <body>
-<header class="navbar navbar-default navbar-fixed-top" role="navigation">
-<div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/">Hungry Foodies</a>
-    </div>
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><%= link_to 'Home', root_path %><span class="sr-only">(current)</span></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Posts <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-<li><%= link_to 'All Posts', posts_path %><span
-            class="sr-only">(current)</span></li>
-            <li><a href="#">Hot Posts</a></li>
-            <li><a href="#">New Posts</a></li>
-            <li class="divider"></li>
-            <li><%= link_to 'About', about_path%></li>
-            <li class="divider"></li>
-            <li><%= link_to 'Contact', contact_path %></li>
-          </ul>
-        </li>
-      </ul>
-      <form class="navbar-form navbar-left" role="search"
-      action="/search" method="get">
-        <div class="form-group">
-          <input type="text" id = "search" name = "search" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <p class="navbar-text pull-right">
-        <% if user_signed_in? %>
-        Logged in as <strong><%= current_user.email %></strong>.      
-        <%= link_to '/allunreadcomments', :id=>"unread" do
-        %><span class="badge"><%=@unread%></span><span
-        class="sr-only">(current)</span>
-        <% end %>
-        <%= link_to 'profile', users_profile_path, :class => 'navbar-link' %> |
-        <%= link_to "Logout", destroy_user_session_path, method:
-        :delete, :class => 'navbar-link'  %>
-        <% else %>
-        <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
-        <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
-        <% end %>
-      </p>
-        </div>
-</div>
-</header>
+  <%= render '/layouts/navbar' %>
+
 <div id="content" class="container-fluid">
   <div class="row">
-    <div class="col-xs-9">
+    <div class="col-xs-9 textFont">
       <% if notice %>
         <p class="alert alert-success"><%= notice %></p>
       <% end %>
@@ -75,7 +27,6 @@
     <div class="col-xs-3">
       <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top">
       <ul class="nav nav-list bs-docs-sidenav">
-          <li><%= link_to 'Hot Posts', posts_path%></li>
           <li id="tag_cloud">
                 <% tag_cloud Post.tag_counts, %w{} do |tag| %>
                     <a href="/tag/<%=tag.id%>"><%=tag.name%> <span class="badge"><%= Post.tagged_with(tag.name).count%></span></a>
@@ -85,16 +36,9 @@
           </nav>
     </div>
   </div>
-</div>
-<footer class="footer">
-<p>Designed by a group of Foodies</p>
-<ul class="footer-links">
-  <li>Team Newbie</li>
-  <li>&middot;</li>
-  <li><a
-  href="https://github.com/scalableinternetservices/Newbie">GitHub</a></li>
-  </ul>
-</footer>
+  </div>
+  
+  <%= render '/layouts/footer' %>
 
 </body>
 </html>

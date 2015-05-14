@@ -16,3 +16,9 @@
 //= require bootstrap-sprockets
 //= require_tree .
 
+function resizeImg(id, width)
+{
+    console.log(id);
+    var img = document.getElementById(id)
+    img.style.marginLeft = (width-img.width)/2+"px";
+}
