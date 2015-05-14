@@ -13,8 +13,47 @@
         js = d.createElement(s); js.id = id;
         js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=357979301073500";
         fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
+        }(document, 'script', 'facebook-jssdk'));
       </script>
+      <script data-no-turbolink>
+        var geocoder;
+        var map;
+        var infowindow = new google.maps.InfoWindow();
+        var marker;
+        var map1;
+        var decode = 0;
+        geocoder = new google.maps.Geocoder();
+      	var lat = parseFloat(<%=@post.latitude%>);
+	var lon = parseFloat(<%=@post.longitude%>);
+	var latlng = new google.maps.LatLng(lat, lon);
+    	geocoder.geocode({'latLng': latlng}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            if (results[1]) {
+	       decode = 1;
+	        var mapOptions = {
+                    center: latlng,
+                    zoom: 8,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                 };
+                 map = new google.maps.Map(document.getElementById("map"),
+                       mapOptions);
+                 map.setZoom(11);
+                 marker = new google.maps.Marker({
+                      position: latlng,
+                      map: map
+                 });
+                 infowindow.setContent(results[1].formatted_address);
+                 infowindow.open(map, marker);
+           }
+          else {
+                    document.getElementById("maptr").style.display="none";
+           }
+        }
+        else {
+            document.getElementById("maptr").style.display="none";
+        }
+        });
+        </script>
 
     <table class="table table-hover">
       <% user = @post.getUser() %>
@@ -33,17 +72,36 @@
             <%= link_to user.user_name, "/users/profile/" + user.id.to_s%>
           </div>      
         </td> 
-        <td class="col-xs-9">
-          <div class="row">
-          <% if not @post.pictures.empty? %>
-          <% @post.pictures.each do |pic|%>
-          <%= image_tag pic.image.url(:medium), :class => "imgLg center-block" %>
-          <% end %>
-          <% end %> <br>
+        <td class="col-xs-9 postField">
+          <div class="col-xs-10">
+            <div class="row">
+              <% if not @post.pictures.empty? %>
+              <% @post.pictures.each do |pic|%>
+              <%= image_tag pic.image.url(:medium), :class => "imgLg center-block" %>
+              <% end %>
+              <% end %> <br>
+            </div>
+            <div class="row contentField">
+              <%= @post.content %>
+            </div>
           </div>
-          <div class="row contentField">
-          <%= @post.content %>
-        </div>
+          <div class="col-xs-2">
+            <div class="fb-share-button share-button" data-layout="button"></div>
+          </div>
+        </td>
+      </tr>
+      <% if !@post.address.nil? %>
+      <tr>
+        <td colspan = "2">
+          Location: <%= @post.address %>
+        </td>
+      </tr>
+      <% end %>
+      <tr id = "maptr">
+        <td colspan = "2">
+          <div style='width: 100%;'>
+            <div id="map" style='width: 100%; height: 400px;'></div>
+          </div>
         </td>
       </tr>
       <tr>
@@ -84,9 +142,6 @@
               <%= link_to posts_path, :class=>"btn btn-default btn-noborder" do %>
               <span class="glyphicon glyphicon-log-out"></span> Back
               <%end%>
-            </div>
-            <div class="col-xs-2">
-                <div class="fb-share-button" data-layout="button"></div>
             </div>
         </td>
       </tr>

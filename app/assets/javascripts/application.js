@@ -43,6 +43,10 @@ var ready = function()
         newer.className = "previous disabled";
         older.className = "next";
     }
+    else {
+        newer.className = "previous disabled";
+        older.className = "next disabled";
+    }
 }
 
 function nextPage()

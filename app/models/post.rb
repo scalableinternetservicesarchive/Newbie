@@ -1,5 +1,4 @@
 class Post < ActiveRecord::Base
-  #before_save :default_values
     # favorite posts
     belongs_to :user
     has_many :favorite_posts
@@ -11,8 +10,9 @@ class Post < ActiveRecord::Base
 
     acts_as_taggable
 
-    geocoded_by :ipaddress,
-    :latitude => :latitude, :longitude => :longitude
+    geocoded_by :getAddress,
+                :latitude => :latitude, :longitude => :longitude
+
     after_validation :geocode
 
     after_save ThinkingSphinx::RealTime.callback_for(:post)
@@ -24,4 +24,12 @@ class Post < ActiveRecord::Base
     def getUser()
       @user = User.find(self.user_id)
     end
+
+    def getAddress
+      if self.address.nil?
+        self.ip_address
+      else
+        self.address
+      end
+    end      
 end

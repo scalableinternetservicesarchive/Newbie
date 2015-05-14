@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   get 'comments/:id/:post_id' => 'posts#comments'
   get 'allunreadcomments' => 'posts#allUnreadComments'
   get 'search' => 'posts#search'
+  get 'hot' => 'posts#hot'
+  get 'showall' => 'posts#showall'
   resources :tag
   root 'index#index'
 

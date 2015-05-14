@@ -8,8 +8,8 @@
               <h1 class="titleFont">Enjoy Free Food Here!</h1>
               <p class="lead">Find free food information from Others!</p>
               <% if !user_signed_in? %>
-              <%= link_to "Sign up", new_user_registration_path, :class => 'btn btn-large btn-primary'  %> 
-              <%= link_to "Login", new_user_session_path, :class => 'btn btn-large btn-success'  %>
+              <%= link_to "Sign up", new_user_registration_path, :class => 'btn btn-lg btn-primary'  %> 
+              <%= link_to "Login", new_user_session_path, :class => 'btn btn-lg btn-success'  %>
               <% end %>
             </div>
           </div>
@@ -20,7 +20,7 @@
             <div class="carousel-caption">
               <h1 class="titleFont">Help Others Find Free Food!</h1>
               <p class="lead">COME ON! Post free food near you! Let's save and enjoy.</p>
-              <%= link_to "New Post", new_post_path, :class => 'btn btn-large btn-primary'  %>
+              <%= link_to "New Post", new_post_path, :class => 'btn btn-lg btn-primary'  %>
             </div>
           </div>
         </div>
@@ -30,7 +30,7 @@
             <div class="carousel-caption">
               <h1 class="titleFont">Find Hot Free Food Here!</h1>
               <p class="lead">Hope you find what you love:)</p>
-              <%= link_to 'Hot Posts', posts_path, :class => 'btn btn-large btn-primary' %>
+              <%= link_to 'Hot Posts', '/hot', :class => 'btn btn-lg btn-primary' %>
             </div>
           </div>
         </div>

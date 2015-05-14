@@ -1,5 +1,16 @@
 <p id="notice"><%= notice %></p>
-
-<h2 class="titleFont">Listing Posts</h2>
+<div class="row">
+<div class="col-xs-9">
+  <h1 class="titleFont">Listing Posts</h1>
+  </div>
+<div class="col-xs-3">
+  <div  class="newPostBtn">
+  <%= link_to new_post_path, :class=>"btn btn-primary btn-lg" do%>
+  New Post <span class="glyphicon glyphicon-apple">
+  </span>
+  <%end%>
+  </div>
+</div>
+</div>
 
 <%= render 'index' %>

@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/alexreisner/geocoder.git
+  revision: 899a34b521458d8990723376fc1b52f7afef7141
+  specs:
+    geocoder (1.2.8)
+
+GIT
   remote: git://github.com/thoughtbot/paperclip.git
   revision: 292f236d8615ab3db77de2e5f8d43e393284be5f
   specs:
@@ -188,7 +194,6 @@ GEM
       fog-core
       nokogiri (~> 1.5, >= 1.5.11)
     formatador (0.2.5)
-    geocoder (1.2.8)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
     gmaps4rails (2.1.2)
@@ -312,7 +317,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   devise (~> 3.4.0)
   fog
-  geocoder
+  geocoder!
   gmaps4rails
   jbuilder (~> 2.0)
   jdbc-mysql (~> 5.1.28)

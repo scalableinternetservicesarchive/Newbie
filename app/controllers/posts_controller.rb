@@ -20,10 +20,7 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @temp = request.remote_ip
-    @posts = Post.all.order('created_at DESC')
-      #Post.near("Westwood, Los Angeles, California, United States", 20, order: :distance)
-      #Post.all
+    @posts = Post.near(request.remote_ip.to_s, 20, order: :upvote_number)
   end
 
   # GET /posts/1
@@ -46,6 +43,14 @@ class PostsController < ApplicationController
   def search
     @posts = Post.search(params[:search])
     @keyword = params[:search]
+  end
+
+  def showall
+    @posts = Post.all.order('created_at DESC')
+  end
+
+  def hot
+    @posts = Post.all.order('upvote_number DESC')
   end
 
   def comments
@@ -129,8 +134,8 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     post_params[:user_id] = current_user.id
-    post_params[:ipaddress] = request.ip
     @post = Post.new(post_params)
+    @post.ip_address = request.remote_ip
 
     respond_to do |format|
       if @post.save
@@ -202,7 +207,7 @@ class PostsController < ApplicationController
     def post_params
       params.require(:post).permit(:user_id, :title, :datetime, :content,
                                    :image_url, :downvote_number, :upvote_number,
-                                   :pictures, :image, :tag_list).merge(user_id: current_user.id)
+                                   :pictures, :image, :tag_list, :ip_address, :address).merge(user_id: current_user.id)
     end
 
     def correct_user

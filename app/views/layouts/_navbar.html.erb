@@ -16,10 +16,10 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Posts <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-<li><%= link_to 'All Posts', posts_path %><span
+            <li><%= link_to 'Posts Nearby', posts_path %><span
             class="sr-only">(current)</span></li>
-            <li><a href="#">Hot Posts</a></li>
-            <li><a href="#">Posts Nearby</a></li>
+            <li><%= link_to 'Hot Posts', '/hot'%></li>
+            <li><%= link_to 'All Posts', '/showall'%></a></li>
             <li class="divider"></li>
             <li><%= link_to 'About', about_path%></li>
             <li class="divider"></li>

@@ -52,7 +52,7 @@ gem 'yaml_db'
 
 gem 'acts-as-taggable-on', '~> 3.4'
 
-gem 'geocoder'
+gem 'geocoder', :git => 'git://github.com/alexreisner/geocoder.git'
 
 gem 'gmaps4rails'
 
