@@ -85,6 +85,12 @@ ActiveRecord::Schema.define(version: 20150514051419) do
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "unread_comments", force: :cascade do |t|
+    t.integer  "user_id",     limit: 4
+    t.integer  "comment_id",  limit: 4
+    t.boolean  "to_post",     limit: 1
+    t.integer  "reply_to_id", limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "unreadcomments", force: :cascade do |t|
