@@ -8,6 +8,14 @@
   Special styles for presenting Bootstrap's documentation and examples
 */
 
+.titleFont {
+  font-family: 'Kaushan Script', cursive;
+}
+
+.textFont {
+  font-family: 'Exo 2', sans-serif;
+}
+
 /* Post table */
 .newPostBtn {
   margin-top: 10px;
@@ -21,6 +29,16 @@
 .imgLg {
   max-width: 100%;
   max-height: 600px;
+}
+
+.imgSm {
+  width:100px;
+}
+
+.avatar {
+  max-width: 100px;
+  max-height: 100px;
+  overflow:hidden
 }
 
 .deleteBtn {
@@ -88,11 +106,19 @@
   opacity:1;
 }
 
+.comment_threaded {
+    padding: 2px 2px 10px 2px;
+    border-style: ridge;
+    border-width: 2px;
+    background-color: #f8f8f8;
+}
+
 /* CUSTOMIZE THE CAROUSEL
     -------------------------------------------------- */
 
     /* Carousel base class */
     .carousel {
+      margin-top:-20px;
       margin-bottom: 60px;
     }
 
@@ -224,7 +250,11 @@
       }
     }
 
-    .postImage{max-width:300px; height:auto;}
+    .postImagediv {
+      height:500px;
+      overflow:hidden;
+    }
+    .postImage{height:500px;}
 
 
     @media (max-width: 767px) {

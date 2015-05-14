@@ -33,11 +33,13 @@
                 <%replyUser.push(u)%>
                 <%i = c.replyToCommentID%>
               <%end%>
+              <%replyUser.each do%>
+                    <div class=comment_threaded>
+              <%end%>
               <%replyComment.zip(replyUser).reverse.each do |c, u|%>
-                <div>
-                  <%=u.user_name%>:
-                  <%=c.content%>
-                </div>
+                        <%=u.user_name%>:
+                        <%=c.content%>
+                  </div>
               <%end%>
 
               <%=comment.content%>

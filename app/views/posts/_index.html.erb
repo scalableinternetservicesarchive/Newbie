@@ -11,7 +11,7 @@
           </div>
       </td>
       <td colspan="2" class="titleField">
-        <h4><%= link_to post.title, post %></h4>
+        <h4><%= link_to post.title, post, :class=>"textFont" %></h4>
       </td>
       <td>
         <%=post.datetime.to_formatted_s(:short) %>

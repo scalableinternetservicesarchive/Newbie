@@ -8,11 +8,13 @@
       <tr>
         <td class="col-xs-3">
           <div class="row">
+            <div class="avatar center-block">
             <%= if user.avatar.file?
-                image_tag(user.avatar.url(:thumb), class:'center-block')
+                image_tag(user.avatar.url(:thumb), class:'imgSm')
                 else
-                image_tag("no_avatar.png", class:'center-block')
+                image_tag("no_avatar.png")
                 end %>
+            </div>
           </div>
           <div class="row text-center">
             <%=user.user_name%>
@@ -22,7 +24,7 @@
           <div class="row">
           <% if not @post.pictures.empty? %>
           <% @post.pictures.each do |pic|%>
-          <%= image_tag pic.image.url, :class => "imgLg center-block" %>
+          <%= image_tag pic.image.url(:medium), :class => "imgLg center-block" %>
           <% end %>
           <% end %> <br>
           </div>
