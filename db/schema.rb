@@ -87,6 +87,15 @@ ActiveRecord::Schema.define(version: 20150514053433) do
   create_table "unread_comments", force: :cascade do |t|
   end
 
+  create_table "unreadcomments", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.integer  "comment_id", limit: 4
+    t.boolean  "to_post",    limit: 1
+    t.integer  "reply_toid", limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
     t.string   "encrypted_password",     limit: 255, default: "", null: false

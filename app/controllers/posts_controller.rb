@@ -21,7 +21,7 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     @temp = request.remote_ip
-    @posts = Post.all
+    @posts = Post.all.order('created_at DESC')
       #Post.near("Westwood, Los Angeles, California, United States", 20, order: :distance)
       #Post.all
   end
@@ -30,6 +30,16 @@ class PostsController < ApplicationController
   # GET /posts/1.json
   def show
     @comments = Comment.where(post_id: @post.id)
+    if !current_user.nil?
+      @unread_comm = Unreadcomment.where(user_id:current_user.id)
+      @unread_comm.each do |unr| 
+        @comm = Comment.find(unr.comment_id)
+        if !@comm.nil? && @comm.post_id == @post.id
+          Unreadcomment.delete(unr.id)
+        end
+      end
+      get_unread
+    end
   end
 
   # Get /search
@@ -49,14 +59,7 @@ class PostsController < ApplicationController
   end
 
   def allUnreadComments
-    @posts = Post.where(user_id: current_user.id)
-    @unread_comm = Hash.new
-    @posts.each do |p|
-      @tmp = Comment.where(post_id: p.id, read: false)
-      if @tmp.size>0
-        @unread_comm[p] = @tmp.size
-      end
-    end
+    @all_unread = Unreadcomment.where(user_id: current_user.id)
   end
 
   # GET /posts/new

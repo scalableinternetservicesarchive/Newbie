@@ -49,7 +49,7 @@
           <% callfunction = 'resizeImg("'+imgId+'", 300)'%>
           <%= if post.pictures.empty?
                   link_to image_tag("default.png", class:
-          'postImage',id:id, onload:"resizeImg("), post
+          'postImage',id:imgId, onload:callfunction), post
               else
                   link_to image_tag(post.pictures.first.image.url,
           class: 'postImage',id:imgId, onload: callfunction), post

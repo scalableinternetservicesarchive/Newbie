@@ -6,10 +6,12 @@ class CommentsController < ApplicationController
 	
 	def create
 		@comment = @post.comments.create(comment_params)
-		if @post.user_id == current_user.id
-			@comment.read = true
-			@comment.save
+		if @comment.replyToCommentID.nil? && current_user.id!=@post.user_id
+			Unreadcomment.create(:user_id => @post.user_id, :comment_id => @comment.id, :to_post => true, :reply_toid => @post.id)
+		elsif !@comment.replyToCommentID.nil?
+			Unreadcomment.create(:user_id => Comment.find(@comment.replyToCommentID).user_id, :comment_id => @comment.id, :to_post => false, :reply_toid => @comment.replyToCommentID)
 		end
+
 		redirect_to post_path(@post)
 	end
 
