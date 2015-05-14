@@ -6,7 +6,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def get_unread
+  	@unread = 0
+  	if !current_user.nil?
   	@unread = Unreadcomment.where(user_id: current_user.id).size
+  end
   end
 
 
