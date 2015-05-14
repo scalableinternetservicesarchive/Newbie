@@ -30,14 +30,16 @@ class PostsController < ApplicationController
   # GET /posts/1.json
   def show
     @comments = Comment.where(post_id: @post.id)
-    @unread_comm = Unreadcomment.where(user_id:current_user.id)
-    @unread_comm.each do |unr| 
-      @comm = Comment.find(unr.comment_id)
-      if !@comm.nil? && @comm.post_id == @post.id
-        Unreadcomment.delete(unr.id)
+    if !current_user.nil?
+      @unread_comm = Unreadcomment.where(user_id:current_user.id)
+      @unread_comm.each do |unr| 
+        @comm = Comment.find(unr.comment_id)
+        if !@comm.nil? && @comm.post_id == @post.id
+          Unreadcomment.delete(unr.id)
+        end
       end
+      get_unread
     end
-    get_unread
   end
 
   # Get /search
