@@ -173,6 +173,18 @@ class PostsController < ApplicationController
   # DELETE /posts/1.json
   def destroy
       respond_to do |format|
+        #@post.destroy
+        @unread_to_post = Unreadcomment.where(to_post: true, reply_toid: @post.id)
+        @unread_to_post.each do |utp|
+          Unreadcomment.delete(utp.id)
+        end
+        @unread_to_comm = Unreadcomment.where(to_post: false, user_id: current_user.id)
+        @unread_to_comm.each do |utc|
+          if Comment.find(utc.comment_id).post_id == @post.id
+            Unreadcomment.delete(utc.id)
+          end
+        end
+        @post.comments.destroy
         @post.destroy
 
         format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
