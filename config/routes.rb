@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resources :comments
     put :favorite, on: :member
   end
+  get 'posts/show' => 'posts#show'
   get 'allpost/' => 'posts#listOwnPost'
   get 'allpost/:id' => 'posts#listUserPost'
   get 'votepost/up/:id' => 'posts#upvote'

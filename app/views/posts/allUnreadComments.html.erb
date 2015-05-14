@@ -1,12 +1,18 @@
 <table class="table table-hover">
-<%@unread_comm.each do |post, unread_count|%>
+<%@all_unread.each do |aun|%>
   <tr>
     <td>
+    <%if aun.to_post%>
             
       
-      <div class="col-xs-20"> <%= link_to post do %> <%=post.title%> <span class="badge"><%=unread_count%></span>
-      <% end %></div>
-  
+      <div class="col-xs-20"> <%= Post.find(aun.reply_toid).title %></div>
+      <div class="col-xs-20"> <%= Comment.find(aun.comment_id).content %></div>
+      <div class="col-xs-20"> <%= link_to "view", 'posts/'+aun.reply_toid.to_s %></div>
+    <%else%>
+	    <div class="col-xs-20"> <%= Comment.find(aun.reply_toid).content %></div> 
+	   <div class="col-xs-20"> <%= Comment.find(aun.comment_id).content %></div>
+	   <div class="col-xs-20"> <%= link_to "view", 'posts/'+Comment.find(aun.comment_id).post_id.to_s %></div>
+	<%end%>
 
     </td>
   </tr>
