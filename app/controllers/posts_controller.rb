@@ -18,6 +18,8 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
+    @lat = request.location.latitude
+    @lon = request.location.longitude
     @posts = Post.near(request.remote_ip.to_s, 20, order: :upvote_number)
   end
 

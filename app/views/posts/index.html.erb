@@ -11,5 +11,64 @@
   </div>
 </div>
 </div>
+<div class="row">
+<script>
+        var geocoder;
+        var map;
+        var infowindow = new google.maps.InfoWindow();
+        var marker;
+        var decode = 0;
+        var markers = [];
+        initialize();
+        function initialize() {
+          geocoder = new google.maps.Geocoder();
+      	  var lat = parseFloat(<%=@lat%>);
+	  var lon = parseFloat(<%=@lon%>);
+	  var latlng = new google.maps.LatLng(lat, lon);
+    	  geocoder.geocode({'latLng': latlng}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+              if (results[1]) {
+	         decode = 1;
+	          var mapOptions = {
+                      center: latlng,
+                      zoom: 8,
+                      mapTypeId: google.maps.MapTypeId.ROADMAP
+                   };
+                   map = new google.maps.Map(document.getElementById("map"),
+                         mapOptions);
+                   map.setZoom(10);
+                   marker = new google.maps.Marker({
+                        position: latlng,
+                        map: map
+                   });
+                    addMarker();
+
+               }
+               else {
+                    document.getElementById("map").style.display="none";
+               }
+            }
+            else {
+                document.getElementById("map").style.display="none";
+            }
+            });
+        }
+                  function addMarker() {
+                  <% @posts.each do |post| %>
+                  var latlng = new google.maps.LatLng(parseFloat(<%=post.latitude%>),parseFloat(<%=post.longitude%>));
+
+          markers.push(new RichMarker({
+                  position: latlng,
+                  map: map,
+                  anchor: RichMarkerPosition.MIDDLE,
+                  content:'<%= button_to '/posts/' + post.id.to_s, :method => :get, :class=>"btn btn-info btn-noborder btn-xs" do%><span class="glyphicon glyphicon-cutlery"></span><%end%>'
+                  }));
+                  <%end%>
+        }
+</script>
+<div style='width: 100%;'>
+            <div id="map" style='width: 100%; height: 400px;'></div>
+          </div>
+  </div>
 <%= render 'index' %>
 
