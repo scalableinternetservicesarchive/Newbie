@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150515041702) do
+ActiveRecord::Schema.define(version: 20150515161310) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "post_id",          limit: 4
@@ -66,6 +66,15 @@ ActiveRecord::Schema.define(version: 20150515041702) do
     t.string   "ip_address",              limit: 255
   end
 
+  create_table "readcomments", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.integer  "comment_id", limit: 4
+    t.boolean  "to_post",    limit: 1
+    t.integer  "reply_toid", limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id",        limit: 4
     t.integer  "taggable_id",   limit: 4
@@ -87,12 +96,6 @@ ActiveRecord::Schema.define(version: 20150515041702) do
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "unread_comments", force: :cascade do |t|
-    t.integer  "user_id",     limit: 4
-    t.integer  "comment_id",  limit: 4
-    t.boolean  "to_post",     limit: 1
-    t.integer  "reply_to_id", limit: 4
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
   end
 
   create_table "unreadcomments", force: :cascade do |t|

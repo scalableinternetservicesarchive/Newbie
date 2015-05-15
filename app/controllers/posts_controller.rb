@@ -30,10 +30,12 @@ class PostsController < ApplicationController
       @unread_comm.each do |unr| 
         @comm = Comment.find(unr.comment_id)
         if !@comm.nil? && @comm.post_id == @post.id
+          Readcomment.create(:user_id => unr.user_id, :comment_id => unr.comment_id, :to_post => unr.to_post, :reply_toid => unr.reply_toid)
           Unreadcomment.delete(unr.id)
         end
       end
       get_unread
+      get_read
     end
   end
 
@@ -63,6 +65,10 @@ class PostsController < ApplicationController
 
   def allUnreadComments
     @all_unread = Unreadcomment.where(user_id: current_user.id)
+  end
+
+  def allReadComments
+    @all_read = Readcomment.where(user_id: current_user.id)
   end
 
   # GET /posts/new
@@ -176,7 +182,7 @@ class PostsController < ApplicationController
   # DELETE /posts/1.json
   def destroy
       respond_to do |format|
-        #@post.destroy
+       
         @unread_to_post = Unreadcomment.where(to_post: true, reply_toid: @post.id)
         @unread_to_post.each do |utp|
           Unreadcomment.delete(utp.id)
@@ -187,6 +193,17 @@ class PostsController < ApplicationController
             Unreadcomment.delete(utc.id)
           end
         end
+        @read_to_post = Readcomment.where(to_post: true, reply_toid: @post.id)
+        @read_to_post.each do |rtp|
+          Readcomment.delete(rtp.id)
+        end
+        @read_to_comm = Readcomment.where(to_post: false)
+        @read_to_comm.each do |rtc|
+          if Comment.find(rtc.comment_id).post_id == @post.id
+            Readcomment.delete(rtc.id)
+          end
+        end
+        
         @post.comments.destroy
         @post.destroy
 

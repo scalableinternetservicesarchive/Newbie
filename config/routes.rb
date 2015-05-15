@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get 'favorite/:id' => 'posts#favorite'
   get 'comments/:id/:post_id' => 'posts#comments'
   get 'allunreadcomments' => 'posts#allUnreadComments'
+  get 'allreadcomments' => 'posts#allReadComments'
   get 'search' => 'posts#search'
   get 'hot' => 'posts#hot'
   get 'showall' => 'posts#showall'

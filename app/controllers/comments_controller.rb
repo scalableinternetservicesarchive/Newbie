@@ -16,6 +16,14 @@ class CommentsController < ApplicationController
 	end
 
 	def destroy
+		@read_comm = Readcomment.where(comment_id: @comment.id)
+		@read_comm.each do |r|
+			Readcomment.delete(r.id)
+		end
+		@unread_comm = Unreadcomment.wher(comment_id: @comment.id)
+		@unread_comm.each do |u|
+			Unreadcomment.delete(u.id)
+		end
     	@comment.destroy
         redirect_to post_path(@post)
 	end
