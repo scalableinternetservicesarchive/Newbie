@@ -15,6 +15,7 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require_tree .
+//= require richmarker
 
 function resizeImg(id, width)
 {
@@ -29,7 +30,6 @@ var ready = function()
     pagenum = 1;
     posts = document.getElementsByName("post");
     count = posts.length
-    console.log(count);
     newer = document.getElementById("newer");
     older = document.getElementById("older");
     if (count > 0 && count <= 5) {
