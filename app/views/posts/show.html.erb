@@ -3,6 +3,19 @@
     <h3 class="panel-title"><%= @post.title%></h3>
   </div>
   <div class="panel-body">
+
+      <!-- sharing on facebook -->
+      <div id="fb-root"></div>
+      <script>
+        (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=357979301073500";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+      </script>
+
     <table class="table table-hover">
       <% user = @post.getUser() %>
       <tr>
@@ -58,7 +71,7 @@
               <% else %>
               <span id="<%=@post.id %>star" class="glyphicon glyphicon-star-empty"></span>
               <% end %>
-                
+
               (<span id = "<%=@post.id %>favorite"><%= @post.favorited_by.count %></span>)
             <%end%>
             </div>
@@ -71,6 +84,9 @@
               <%= link_to posts_path, :class=>"btn btn-default btn-noborder" do %>
               <span class="glyphicon glyphicon-log-out"></span> Back
               <%end%>
+            </div>
+            <div class="col-xs-2">
+                <div class="fb-share-button" data-layout="button"></div>
             </div>
         </td>
       </tr>
