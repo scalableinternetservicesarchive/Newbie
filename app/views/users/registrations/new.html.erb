@@ -28,9 +28,14 @@
 
     <div class="field">
       <%= f.label :password_confirmation %><br />
-      <%= f.password_field :password_confirmation, autocomplete: "off", class:"form-control" %>
+      <%= f.password_field :password_confirmation, autocomplete: "off" %>
     </div>
-<br>
+
+    <div class="field">
+        <%= f.label :photo %>
+        <%= f.file_field :avatar %><br>
+    </div>
+
     <div class="actions">
       <%= f.submit "Sign up" , :class=>"btn btn-primary"%>
     </div>

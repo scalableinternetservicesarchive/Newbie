@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20150515041702) do
     t.datetime "updated_at",                                        null: false
     t.string   "latitude",                limit: 255
     t.string   "longitude",               limit: 255
+    t.string   "ipaddress",               limit: 255
     t.integer  "downvote_number",         limit: 4,     default: 0
     t.integer  "upvote_number",           limit: 4,     default: 0
     t.string   "image_file_name",         limit: 255
