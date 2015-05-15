@@ -5,13 +5,16 @@
     <%if aun.to_post%>
             
       
-      <div class="col-xs-20"> <%= Post.find(aun.reply_toid).title %> </div>
-      <div class="col-xs-20"> <%= Comment.find(aun.comment_id).content %>  <%= aun.created_at %></div>
-      <div class="col-xs-20"> <%= link_to "view", 'posts/'+aun.reply_toid.to_s %></div>
+      
+      <div class="center-block"><font size="+1">Replied to:  <%= Post.find(aun.reply_toid).title %></font> </div>
+      <div class="center-block"><font size="+1">Content: <%= Comment.find(aun.comment_id).content %></font> </div>
+      <div class="center-block"><font size="-2">Created at: <%= aun.created_at %></font></div>
+      <div class="center-block"> <%= link_to "view", "viewcomm/"+aun.id.to_s %></div>
     <%else%>
-	    <div class="col-xs-20"> <%= Comment.find(aun.reply_toid).content %></div> 
-	   <div class="col-xs-20"> <%= Comment.find(aun.comment_id).content %> <%= aun.created_at %></div>
-	   <div class="col-xs-20"> <%= link_to "view", 'posts/'+Comment.find(aun.comment_id).post_id.to_s %></div>
+	    <div class="center-block"><font size="+1">Replied to:  <%= Comment.find(aun.reply_toid).content %></font></div> 
+     <div class="center-block"><font size="+1">Content: <%= Comment.find(aun.comment_id).content %></font></div>
+     <div class="center-block"><font size="-2">Created at: <%= aun.created_at %></font></div>
+	   <div class="center-block"> <%= link_to "view", "viewcomm/"+aun.id.to_s %></div>
 	<%end%>
 
     </td>

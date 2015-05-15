@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   get 'search' => 'posts#search'
   get 'hot' => 'posts#hot'
   get 'showall' => 'posts#showall'
+  get 'viewcomm/:id' => 'posts#view_comm'
   resources :tag
   root 'index#index'
 

@@ -27,17 +27,15 @@ class PostsController < ApplicationController
   # GET /posts/1.json
   def show
     @comments = Comment.where(post_id: @post.id)
-    if !current_user.nil?
-      @unread_comm = Unreadcomment.where(user_id:current_user.id)
-      @unread_comm.each do |unr| 
-        @comm = Comment.find(unr.comment_id)
-        if !@comm.nil? && @comm.post_id == @post.id
-          Readcomment.create(:user_id => unr.user_id, :comment_id => unr.comment_id, :to_post => unr.to_post, :reply_toid => unr.reply_toid)
-          Unreadcomment.delete(unr.id)
-        end
-      end
-      get_unread
-    end
+  end
+
+  def view_comm
+    @unread_comm = Unreadcomment.find(params[:id])    
+    @post_id = Comment.find(@unread_comm.comment_id).post_id
+    Readcomment.create(:user_id => @unread_comm.user_id, :comment_id => @unread_comm.comment_id, :to_post => @unread_comm.to_post, :reply_toid => @unread_comm.reply_toid)
+    Unreadcomment.delete(params[:id])
+    get_unread
+    redirect_to "/posts/" + @post_id.to_s
   end
 
   # Get /search
@@ -52,16 +50,6 @@ class PostsController < ApplicationController
 
   def hot
     @posts = Post.all.order('upvote_number DESC')
-  end
-
-  def comments
-    @comment = Comment.find(params[:id])
-    @post = Post.find(params[:post_id])
-    if current_user.id == @post.user_id && (!@comment.read)
-      @comment.read = true
-      @comment.save
-      get_unread
-    end
   end
 
   def allUnreadComments
