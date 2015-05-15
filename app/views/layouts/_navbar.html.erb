@@ -38,11 +38,7 @@
         <% if user_signed_in? %>
         Logged in as <strong><%= current_user.email %></strong>.      
         <%= link_to '/allunreadcomments', :id=>"unread" do
-        %><span class="badge"><%="Unread: "+@unread.to_s %></span><span
-        class="sr-only">(current)</span>
-        <% end %>
-        <%= link_to '/allreadcomments', :id=>"read" do
-        %><span class="badge"><%="Read: "+@read.to_s %></span><span
+        %><span class="badge"><%=@unread%></span><span
         class="sr-only">(current)</span>
         <% end %>
         <%= link_to 'profile', users_profile_path, :class => 'navbar-link' %> |

@@ -43,6 +43,7 @@ class Users::ProfilesController < ApplicationController
 		end
 	end
 
+
 	private
 
 	def post_params
