@@ -14,8 +14,6 @@ class PostsController < ApplicationController
     end
   end
 
- 
-
 
   # GET /posts
   # GET /posts.json

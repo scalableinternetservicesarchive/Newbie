@@ -90,7 +90,7 @@
           </div>
         </td>
       </tr>
-      <% if !@post.address.nil? %>
+      <% if @post.address!='' %>
       <tr>
         <td colspan = "2">
           Location: <%= @post.address %>

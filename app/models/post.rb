@@ -26,7 +26,7 @@ class Post < ActiveRecord::Base
     end
 
     def getAddress
-      if self.address.nil?
+      if self.address == ''
         self.ip_address
       else
         self.address
