@@ -122,15 +122,16 @@
                 :method => :get, :remote=> true, :class=>"btn btn-default btn-noborder" do %><span class="glyphicon glyphicon-thumbs-down"></span>
               (<span id = "<%= @post.id %> downvote"><%= @post.downvote_number%></span>)<%end%>
             </div>
-            <div class="col-xs-2">
+          <div class="col-xs-2">
+            <!--need to optimize here -->
               <%= button_to '/favorite/' + @post.id.to_s, :method => :get, :remote=>true, :class => "btn btn-default btn-noborder" do %>
-              <% if current_user and current_user.favorites.exists?(:id => @post.id)%>
+              <% if current_user and @post.favorite_posts.exists?(:user_id => current_user.id)%>
               <span id="<%=@post.id %>star" class="glyphicon glyphicon-star"></span>
               <% else %>
               <span id="<%=@post.id %>star" class="glyphicon glyphicon-star-empty"></span>
               <% end %>
 
-              (<span id = "<%=@post.id %>favorite"><%= @post.favorited_by.count %></span>)
+              (<span id = "<%=@post.id %>favorite"><%= @post.favorite_posts.size %></span>)
             <%end%>
             </div>
             <div class="col-xs-3">

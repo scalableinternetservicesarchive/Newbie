@@ -4,8 +4,7 @@ class PicturesController < ApplicationController
   # GET /pictures
   # GET /pictures.json
   def index
-    @post = Post.find(params[:post_id])
-    @pictures = @post.pictures
+    @post = Post.find(params[:post_id]).includes(:pictures)
 
     respond_to do |format|
       format.html

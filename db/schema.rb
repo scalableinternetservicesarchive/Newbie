@@ -55,7 +55,6 @@ ActiveRecord::Schema.define(version: 20150515161310) do
     t.datetime "updated_at",                                        null: false
     t.string   "latitude",                limit: 255
     t.string   "longitude",               limit: 255
-    t.string   "ipaddress",               limit: 255
     t.integer  "downvote_number",         limit: 4,     default: 0
     t.integer  "upvote_number",           limit: 4,     default: 0
     t.string   "image_file_name",         limit: 255
@@ -96,6 +95,12 @@ ActiveRecord::Schema.define(version: 20150515161310) do
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "unread_comments", force: :cascade do |t|
+    t.integer  "user_id",     limit: 4
+    t.integer  "comment_id",  limit: 4
+    t.boolean  "to_post",     limit: 1
+    t.integer  "reply_to_id", limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "unreadcomments", force: :cascade do |t|

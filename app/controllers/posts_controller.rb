@@ -4,11 +4,11 @@ class PostsController < ApplicationController
   before_filter :correct_user, only: [:edit, :update, :destroy]
 
   def listUserPost
-    @posts = Post.where(user_id: params[:id])
+    @posts = Post.where(user_id: params[:id]).paginate(:page =>params[:page], :per_page => 5).includes(:comments,:favorite_posts,:pictures).all
   end
 
   def listOwnPost
-    @posts = Post.where(user_id: current_user.id)
+    @posts = Post.where(user_id: current_user.id).paginate(:page =>params[:page], :per_page => 5).includes(:comments,:favorite_posts,:pictures).all
     respond_to do |format|
       format.html {render :listUserPost}
     end
@@ -20,13 +20,12 @@ class PostsController < ApplicationController
   def index
     @lat = request.location.latitude
     @lon = request.location.longitude
-    @posts = Post.near(request.remote_ip.to_s, 20, order: :upvote_number)
+    @posts = Post.near(request.remote_ip.to_s, 20, order: :upvote_number).paginate(:page =>params[:page], :per_page => 5).includes(:comments,:favorite_posts,:pictures).all
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
-    @comments = Comment.where(post_id: @post.id)
   end
 
   def view_comm
@@ -40,24 +39,24 @@ class PostsController < ApplicationController
 
   # Get /search
   def search
-    @posts = Post.search(params[:search])
+    @posts = Post.search params[:search], :sql=> {include:[:comments, :favorite_posts, :pictures]}, :populate => true
     @keyword = params[:search]
   end
 
   def showall
-    @posts = Post.all.order('created_at DESC')
+    @posts = Post.paginate(:page =>params[:page], :per_page => 5).includes(:comments,:favorite_posts,:pictures).all.order('created_at DESC')
   end
 
   def hot
-    @posts = Post.all.order('upvote_number DESC')
+    @posts = Post.paginate(:page =>params[:page], :per_page => 5).includes(:comments,:favorite_posts,:pictures).all.order('upvote_number DESC')
   end
 
   def allUnreadComments
-    @all_unread = Unreadcomment.where(user_id: current_user.id)
+    @all_unread = Unreadcomment.where(user_id: current_user.id).includes(:user).all
   end
 
   def allReadComments
-    @all_read = Readcomment.where(user_id: current_user.id)
+    @all_read = Readcomment.where(user_id: current_user.id).includes(:user).all
   end
 
   # GET /posts/new
@@ -113,13 +112,17 @@ class PostsController < ApplicationController
 
   def favorite
     @post = Post.find(params[:id])
-    if current_user.favorites.exists?(:id => params[:id])
+    @flag = false
+    if current_user
+      if current_user.favorites.exists?(:id => params[:id])
         current_user.favorites.delete(@post)
-    else
+      else
         current_user.favorites << @post
-    end
-    respond_to do |format|
-      format.js { render 'edit.js.erb' }
+        @flag = true
+      end
+      respond_to do |format|
+        format.js { render 'edit.js.erb' }
+      end
     end
   end
 
