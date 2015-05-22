@@ -5,107 +5,27 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+User.delete_all
+100.times do |i|
+	User.create!(email: "test"+i.to_s+"@test.com", password: "00000000", user_name: "test"+i.to_s, gender: "Female", birthday: DateTime.parse('2015-04-18 20:27:05'), location: "Weyburn Terrace 785, Apt 072")
+end
+
 Post.delete_all
-Post.create!(user_id: 1,
-title: 'Post1',
-datetime: DateTime.parse('2015-04-18 20:27:05'),
-content: 'MyText',
-image_url: '1.jpg',
-downvote_number: 2,
-upvote_number: 1)
-
-Post.create!(user_id: 1,
-title: 'Post2',
-datetime: DateTime.parse('2015-04-18 20:27:05'),
-content: 'MyText',
-image_url: '2.jpg',
-downvote_number: 3,
-upvote_number: 2)
-
-Post.create!(user_id: 1,
-title: 'Post3',
-datetime: DateTime.parse('2015-04-18 20:27:05'),
-content: 'MyText',
-image_url: '3.jpg',
-downvote_number: 4,
-upvote_number: 3)
-
-Post.create!(user_id: 1,
-title: 'Post4',
-datetime: DateTime.parse('2015-04-18 20:27:05'),
-content: 'MyText',
-image_url: '5.jpg',
-downvote_number: 5,
-upvote_number: 4)
-
-Post.create!(user_id: 1,
-title: 'Post5',
-datetime: DateTime.parse('2015-04-18 20:27:05'),
-content: 'MyText',
-image_url: '4.jpg',
-downvote_number: 1,
-upvote_number: 1)
-
-Post.create!(user_id: 1,
-title: 'Post6',
-datetime: DateTime.parse('2015-04-18 20:27:05'),
-content: 'MyText',
-image_url: '6.jpg',
-downvote_number: 1,
-upvote_number: 1)
-
-Post.create!(user_id: 1,
-title: 'Post7',
-datetime: DateTime.parse('2015-04-18 20:27:05'),
-content: 'MyText',
-image_url: '7.jpg',
-downvote_number: 1,
-upvote_number: 1)
-
-Post.create!(user_id: 1,
-title: 'Post9',
-datetime: DateTime.parse('2015-04-18 20:27:05'),
-content: 'MyText',
-image_url: '8.jpg',
-downvote_number: 1,
-upvote_number: 1)
-
-Post.create!(user_id: 1,
-title: 'Post8',
-datetime: DateTime.parse('2015-04-18 20:27:05'),
-content: 'MyText',
-image_url: '9.jpg',
-downvote_number: 1,
-upvote_number: 1)
-
-Post.create!(user_id: 1,
-title: 'Post15',
-datetime: DateTime.parse('2015-04-18 20:27:05'),
-content: 'MyText',
-image_url: '10.jpg',
-downvote_number: 1,
-upvote_number: 1)
-
-Post.create!(user_id: 1,
-title: 'Post11',
-datetime: DateTime.parse('2015-04-18 20:27:05'),
-content: 'MyText',
-image_url: '11.jpg',
-downvote_number: 1,
-upvote_number: 1)
-
-Post.create!(user_id: 1,
-title: 'Post12',
-datetime: DateTime.parse('2015-04-18 20:27:05'),
-content: 'MyText',
-image_url: '12.jpg',
-downvote_number: 1,
-upvote_number: 1)
-
-Post.create!(user_id: 1,
-title: 'Post13',
-datetime: DateTime.parse('2015-04-18 20:27:05'),
-content: 'MyText',
-image_url: '13.jpg',
-downvote_number: 1,
-upvote_number: 1)
+1000.times do |i|
+	Post.create!(user_id: i/10, 
+				 title: "test post" + i.to_s, 
+				 datetime: DateTime.parse('2015-04-18 20:27:05'), 
+				 content: "test content", 
+				 post_image_file_name: 'thumb.jpg',
+				 post_image_content_type: 'image/jpeg',
+				 post_image_file_size: 81973,
+				 post_image_updated_at: DateTime.parse('2015-04-18 20:27:05'),
+				 created_at: DateTime.parse('2015-04-18 20:27:05'),
+				 latitude: '34.0637725',
+				 longitude: '-118.4515723',
+				 image_file_name: 'thumb.jpg',
+				 image_content_type: 'image/jpeg',
+				 image_file_size: 81973,
+				 image_updated_at: DateTime.parse('2015-04-18 20:27:05'),
+				 ip_address: "128.3.60.0")
+end
