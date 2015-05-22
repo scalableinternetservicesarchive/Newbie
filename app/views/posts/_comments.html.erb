@@ -4,7 +4,7 @@
   </div>
   <div class="panel-body">
     <ul class="list-group">
-<% @comments.each do |comment| %>
+<% @post.comments.each do |comment| %>
   <% url = "#collapseComment"+comment.id.to_s%>
       <li class="list-group-item  commentItem">
         <div class="row">

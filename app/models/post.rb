@@ -2,7 +2,6 @@ class Post < ActiveRecord::Base
     # favorite posts
     belongs_to :user
     has_many :favorite_posts
-    has_many :favorited_by, through: :favorite_posts, source: :user
 
     has_many :comments
     has_many :votes
@@ -16,10 +15,6 @@ class Post < ActiveRecord::Base
     after_validation :geocode
 
     after_save ThinkingSphinx::RealTime.callback_for(:post)
-
-    def getComments()
-      @comments = Comment.where(post_id: self.id)
-    end
 
     def getUser()
       @user = User.find(self.user_id)

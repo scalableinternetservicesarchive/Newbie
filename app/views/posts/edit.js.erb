@@ -1,8 +1,8 @@
 document.getElementById("<%= @post.id %> upvote").innerHTML = "<%= @post.upvote_number %>";
 document.getElementById("<%= @post.id %> downvote").innerHTML = "<%= @post.downvote_number %>";
-<% if current_user and current_user.favorites.exists?(:id => @post.id) %>
+<% if @flag %>
 document.getElementById("<%=@post.id %>star").className = "glyphicon glyphicon-star"
 <% else %>
 document.getElementById("<%=@post.id %>star").className = "glyphicon glyphicon-star-empty"
 <% end %>
-document.getElementById("<%= @post.id %>favorite").innerHTML = "<%= @post.favorited_by.count %>";
+document.getElementById("<%= @post.id %>favorite").innerHTML = "<%= @post.favorite_posts.size %>";

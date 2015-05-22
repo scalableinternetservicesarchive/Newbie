@@ -4,5 +4,6 @@ ThinkingSphinx::Index.define :post, :with => :real_time do
   indexes content
 
   # attributes
-  #has created_at, updated_at, :type => :string
+  has_many :comments
+  has_many :favorite_posts
 end

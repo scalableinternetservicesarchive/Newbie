@@ -17,6 +17,7 @@
 }
 
 /* Post table */
+
 .newPostBtn {
   margin-top: 10px;
   float:right
@@ -103,6 +104,22 @@
 .postField:hover .share-button {
   visibility:visible;
   opacity:1;
+}
+
+.previous_page {
+  display: inline-block;
+  padding: 5px 14px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+}
+
+.next_page {
+  display: inline-block;
+  padding: 5px 14px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 15px;
 }
 
 /* Comment table */

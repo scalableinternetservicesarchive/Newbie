@@ -48,19 +48,19 @@
         <%= button_to '/favorite/' + post.id.to_s, :method => :get,
         :remote=>true, :class => "btn btn-default
         btn-noborder" do %>
-                <% if current_user and current_user.favorites.exists?(:id => post.id)%>
+                <% if current_user and post.favorite_posts.find_index  {|x| x.user_id == current_user.id}%>
                 <span id="<%=post.id %>star" class="glyphicon glyphicon-star"></span>
                 <% else %>
                  <span id="<%=post.id %>star" class="glyphicon glyphicon-star-empty"></span>
                  <% end %>
                 
-            (<span id = "<%=post.id %>favorite"><%= post.favorited_by.count %></span>)
+            (<span id = "<%=post.id %>favorite"><%= post.favorite_posts.size %></span>)
         <%end%>
       </td>
       <td>
         <%= button_to post_path(post), :method => :get, :class => "btn btn-default
             btn-noborder" do %><span class="glyphicon glyphicon-comment"></span>
-            (<span><%=post.getComments().count%></span>)
+            (<span><%=post.comments.size%></span>)
         <%end%>
       </td>
     </tr>
@@ -68,10 +68,5 @@
 </div>
     <% end %>
 
-<br>
-<nav>
-  <ul class="pager">
-    <li class="previous disabled" id="newer"  onclick = "previousPage()"><a><span aria-hidden="true">&larr;</span> Newer</a></li>
-    <li class="next" id="older" onclick="nextPage()"><a >Older <span aria-hidden="true">&rarr;</span></a></li>
-  </ul>
-</nav>
+    <br>
+    <%= will_paginate @posts, :class =>"pager", :page_links => false%>
