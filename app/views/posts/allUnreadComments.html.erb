@@ -1,18 +1,17 @@
+<h2 class="titleFont">Unreaded Comments</h2>
 <table class="table table-hover">
 <%@all_unread.each do |aun|%>
   <tr>
     <td>
     <%if aun.to_post%>
-            
       
-      
-      <div class="center-block"><font size="+1">Replied to:  <%= Post.find(aun.reply_toid).title %></font> </div>
-      <div class="center-block"><font size="+1">Content: <%= Comment.find(aun.comment_id).content %></font> </div>
+      <div class="center-block"><font size="+1">Replied to:  <%= aun.replypost.title %></font> </div>
+      <div class="center-block"><font size="+1">Content: <%= aun.comment.content %></font> </div>
       <div class="center-block"><font size="-2">Created at: <%= aun.created_at %></font></div>
       <div class="center-block"> <%= link_to "view", "viewcomm/"+aun.id.to_s %></div>
     <%else%>
-	    <div class="center-block"><font size="+1">Replied to:  <%= Comment.find(aun.reply_toid).content %></font></div> 
-     <div class="center-block"><font size="+1">Content: <%= Comment.find(aun.comment_id).content %></font></div>
+	    <div class="center-block"><font size="+1">Replied to:  <%= aun.replycomment.content %></font></div> 
+     <div class="center-block"><font size="+1">Content: <%= aun.comment.content %></font></div>
      <div class="center-block"><font size="-2">Created at: <%= aun.created_at %></font></div>
 	   <div class="center-block"> <%= link_to "view", "viewcomm/"+aun.id.to_s %></div>
 	<%end%>

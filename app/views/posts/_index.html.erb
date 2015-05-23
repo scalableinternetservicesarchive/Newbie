@@ -1,3 +1,4 @@
+<div class="col-xs-9">
 <% @posts.each do |post| %>
 <div class="row" name="post">
 <table class="table table-hover">
@@ -70,3 +71,6 @@
 
     <br>
     <%= will_paginate @posts, :class =>"pager", :page_links => false%>
+</div>
+
+  <%= render 'posts/tag' %>

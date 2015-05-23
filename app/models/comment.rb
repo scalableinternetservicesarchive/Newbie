@@ -1,8 +1,6 @@
 class Comment < ActiveRecord::Base
   belongs_to :post
-
-  def findUser()
-    @user = User.find(self.user_id)
-  end
-
+  belongs_to :user
+  has_many :unreadcomments
+  has_many :readcomments
 end

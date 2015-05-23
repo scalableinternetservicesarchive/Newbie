@@ -4,11 +4,11 @@ class PostsController < ApplicationController
   before_filter :correct_user, only: [:edit, :update, :destroy]
 
   def listUserPost
-    @posts = Post.where(user_id: params[:id]).paginate(:page =>params[:page], :per_page => 5).includes(:comments,:favorite_posts,:pictures).all
+    @posts = Post.where(user_id: params[:id]).paginate(:page =>params[:page], :per_page => 5).eager_load(:comments,:favorite_posts,:pictures).all
   end
 
   def listOwnPost
-    @posts = Post.where(user_id: current_user.id).paginate(:page =>params[:page], :per_page => 5).includes(:comments,:favorite_posts,:pictures).all
+    @posts = Post.where(user_id: current_user.id).paginate(:page =>params[:page], :per_page => 5).eager_load(:comments,:favorite_posts,:pictures).all
     respond_to do |format|
       format.html {render :listUserPost}
     end
@@ -20,7 +20,7 @@ class PostsController < ApplicationController
   def index
     @lat = request.location.latitude
     @lon = request.location.longitude
-    @posts = Post.near(request.remote_ip.to_s, 20, order: :upvote_number).paginate(:page =>params[:page], :per_page => 5).includes(:comments,:favorite_posts,:pictures).all
+    @posts = Post.near(request.remote_ip.to_s, 20, order: :upvote_number).paginate(:page =>params[:page], :per_page => 5).eager_load(:comments,:favorite_posts,:pictures).all
   end
 
   # GET /posts/1
@@ -44,19 +44,19 @@ class PostsController < ApplicationController
   end
 
   def showall
-    @posts = Post.paginate(:page =>params[:page], :per_page => 5).includes(:comments,:favorite_posts,:pictures).all.order('created_at DESC')
+    @posts = Post.paginate(:page =>params[:page], :per_page => 5).eager_load(:comments,:favorite_posts,:pictures).all.order('posts.created_at DESC')
   end
 
   def hot
-    @posts = Post.paginate(:page =>params[:page], :per_page => 5).includes(:comments,:favorite_posts,:pictures).all.order('upvote_number DESC')
+    @posts = Post.paginate(:page =>params[:page], :per_page => 5).eager_load(:comments,:favorite_posts,:pictures).all.order('upvote_number DESC')
   end
 
   def allUnreadComments
-    @all_unread = Unreadcomment.where(user_id: current_user.id).includes(:user).all
+    @all_unread = Unreadcomment.where(user_id: current_user.id).eager_load(:comment,:replypost, :replycomment).all
   end
 
   def allReadComments
-    @all_read = Readcomment.where(user_id: current_user.id).includes(:user).all
+    @all_read = Readcomment.where(user_id: current_user.id).eager_load(:comment,:replypost, :replycomment).all
   end
 
   # GET /posts/new
@@ -207,7 +207,8 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.find(params[:id])
+      @post = Post.eager_load(:user, :favorite_posts, :pictures).find(params[:id])
+      @comments = Comment.eager_load(:user,:post).where(post_id: @post.id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

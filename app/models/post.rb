@@ -4,8 +4,12 @@ class Post < ActiveRecord::Base
     has_many :favorite_posts
 
     has_many :comments
+    has_many :unreadcomments
+    has_many :readcomments
     has_many :votes
     has_many :pictures, :dependent => :destroy
+
+    has_and_belongs_to_many :tags
 
     acts_as_taggable
 
@@ -15,10 +19,6 @@ class Post < ActiveRecord::Base
     after_validation :geocode
 
     after_save ThinkingSphinx::RealTime.callback_for(:post)
-
-    def getUser()
-      @user = User.find(self.user_id)
-    end
 
     def getAddress
       if self.address == ''

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150515161310) do
+ActiveRecord::Schema.define(version: 20150523005840) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "post_id",          limit: 4
@@ -24,12 +24,18 @@ ActiveRecord::Schema.define(version: 20150515161310) do
     t.integer  "replyToCommentID", limit: 4
   end
 
+  add_index "comments", ["post_id"], name: "index_comments_on_post_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
   create_table "favorite_posts", force: :cascade do |t|
     t.integer  "post_id",    limit: 4
     t.integer  "user_id",    limit: 4
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
   end
+
+  add_index "favorite_posts", ["post_id"], name: "index_favorite_posts_on_post_id", using: :btree
+  add_index "favorite_posts", ["user_id"], name: "index_favorite_posts_on_user_id", using: :btree
 
   create_table "pictures", force: :cascade do |t|
     t.integer  "post_id",            limit: 4
@@ -40,6 +46,8 @@ ActiveRecord::Schema.define(version: 20150515161310) do
     t.integer  "image_file_size",    limit: 4
     t.datetime "image_updated_at"
   end
+
+  add_index "pictures", ["post_id"], name: "index_pictures_on_post_id", using: :btree
 
   create_table "posts", force: :cascade do |t|
     t.integer  "user_id",                 limit: 4
@@ -65,6 +73,9 @@ ActiveRecord::Schema.define(version: 20150515161310) do
     t.string   "ip_address",              limit: 255
   end
 
+  add_index "posts", ["created_at"], name: "index_posts_on_created_at", using: :btree
+  add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
+
   create_table "readcomments", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
     t.integer  "comment_id", limit: 4
@@ -73,6 +84,10 @@ ActiveRecord::Schema.define(version: 20150515161310) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
   end
+
+  add_index "readcomments", ["comment_id"], name: "index_readcomments_on_comment_id", using: :btree
+  add_index "readcomments", ["reply_toid"], name: "index_readcomments_on_reply_toid", using: :btree
+  add_index "readcomments", ["user_id"], name: "index_readcomments_on_user_id", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id",        limit: 4
@@ -94,15 +109,6 @@ ActiveRecord::Schema.define(version: 20150515161310) do
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
-  create_table "unread_comments", force: :cascade do |t|
-    t.integer  "user_id",     limit: 4
-    t.integer  "comment_id",  limit: 4
-    t.boolean  "to_post",     limit: 1
-    t.integer  "reply_to_id", limit: 4
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-  end
-
   create_table "unreadcomments", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
     t.integer  "comment_id", limit: 4
@@ -111,6 +117,10 @@ ActiveRecord::Schema.define(version: 20150515161310) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
   end
+
+  add_index "unreadcomments", ["comment_id"], name: "index_unreadcomments_on_comment_id", using: :btree
+  add_index "unreadcomments", ["reply_toid"], name: "index_unreadcomments_on_reply_toid", using: :btree
+  add_index "unreadcomments", ["user_id"], name: "index_unreadcomments_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -146,5 +156,8 @@ ActiveRecord::Schema.define(version: 20150515161310) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
   end
+
+  add_index "votes", ["post_id"], name: "index_votes_on_post_id", using: :btree
+  add_index "votes", ["user_id"], name: "index_votes_on_user_id", using: :btree
 
 end

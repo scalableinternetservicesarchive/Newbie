@@ -4,23 +4,22 @@
   </div>
   <div class="panel-body">
     <ul class="list-group">
-<% @post.comments.each do |comment| %>
+<% @comments.each do |comment| %>
   <% url = "#collapseComment"+comment.id.to_s%>
       <li class="list-group-item  commentItem">
         <div class="row">
           <div class="col-xs-3">
             <div class="col-xs-12">
               <div class="avatar center-block">
-              <% user = comment.findUser() %>
-              <%= if user.avatar.file?
-            image_tag(user.avatar.url(:thumb), class:'imgSm')
+              <%= if comment.user.avatar.file?
+            image_tag(comment.user.avatar.url(:thumb), class:'imgSm')
                 else
             image_tag("no_avatar.png", class:'center-block')
                   end %>
               </div>
             </div>
             <div class="col-xs-12 text-center">
-              <%= link_to user.user_name, "/users/profile/" + user.id.to_s%>
+              <%= link_to comment.user.user_name, "/users/profile/" + comment.user.id.to_s%>
             </div>
           </div> 
           <div class="col-xs-6">
@@ -28,13 +27,13 @@
               <% replyComment = [] %>
               <% replyUser = [] %>
               <% i = comment.replyToCommentID %>
-              <% while i != nil%>
-                <%c = @comments.where(id: i).first%>
-                <%u = c.findUser() %>
+              <% while i != nil %>
+              <%indx=@comments.index {|x| x.id == i}%>
+              <%c = @comments[indx]%>
                 <%replyComment.push(c)%>
-                <%replyUser.push(u)%>
+                <%replyUser.push(c.user)%>
                 <%i = c.replyToCommentID%>
-              <%end%>
+                <%end%>
               <%replyUser.each do%>
                     <div class=comment_threaded>
               <%end%>

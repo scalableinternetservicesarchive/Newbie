@@ -56,20 +56,19 @@
         </script>
 
     <table class="table table-hover">
-      <% user = @post.getUser() %>
       <tr>
         <td class="col-xs-3">
           <div class="row">
             <div class="avatar center-block">
-            <%= if user.avatar.file?
-                image_tag(user.avatar.url(:thumb), class:'imgSm')
+            <%= if @post.user.avatar.file?
+                image_tag(@post.user.avatar.url(:thumb), class:'imgSm')
                 else
                 image_tag("no_avatar.png")
                 end %>
             </div>
           </div>
           <div class="row text-center">
-            <%= link_to user.user_name, "/users/profile/" + user.id.to_s%>
+            <%= link_to @post.user.user_name, "/users/profile/" + @post.user.id.to_s%>
           </div>      
         </td> 
         <td class="col-xs-9 postField">

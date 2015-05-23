@@ -19,7 +19,7 @@ class Users::ProfilesController < ApplicationController
 	end
 
 	def editProfile
-		@user = User.find(current_user)
+		@user = User.find(current_user.id)
 		respond_to do |format|
 			format.html {render "users/profiles/edit_profile"}
 		end
@@ -51,7 +51,7 @@ class Users::ProfilesController < ApplicationController
     end
 
     def set_user
-    	@user = User.find(current_user)
+    	@user = User.find(current_user.id)
     end
 
 end

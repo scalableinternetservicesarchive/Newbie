@@ -20,7 +20,7 @@ type='text/javascript'></script>
 
 <div id="content" class="container-fluid textFont">
   <div class="row">
-    <div class="col-xs-9 textFont">
+    <div class="col-xs-12 textFont">
       <% if notice %>
         <p class="alert alert-success"><%= notice %></p>
       <% end %>
@@ -28,17 +28,6 @@ type='text/javascript'></script>
           <p class="alert alert-danger"><%= alert %></p>
       <% end %>
       <%= yield%>
-    </div>
-    <div class="col-xs-3">
-      <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top">
-      <ul class="nav nav-list bs-docs-sidenav">
-          <li id="tag_cloud">
-                <% tag_cloud Post.tag_counts, %w{} do |tag| %>
-                    <a href="/tag/<%=tag.id%>"><%=tag.name%> <span class="badge"><%= Post.tagged_with(tag.name).count%></span></a>
-                <% end %>
-            </li>
-          </ul>
-          </nav>
     </div>
   </div>
   </div>

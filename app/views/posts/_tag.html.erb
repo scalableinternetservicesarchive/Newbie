@@ -1,0 +1,11 @@
+<div class="col-xs-3">
+      <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top">
+      <ul class="nav nav-list bs-docs-sidenav">
+          <li id="tag_cloud">
+                <% tag_cloud Post.tag_counts, %w{} do |tag| %>
+                    <a href="/tag/<%=tag.id%>"><%=tag.name%> <span class="badge"><%= tag.taggings_count%></span></a>
+                <% end %>
+            </li>
+          </ul>
+          </nav>
+    </div>
