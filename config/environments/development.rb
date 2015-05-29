@@ -44,5 +44,5 @@ Rails.application.configure do
   config.paperclip_defaults = {
       :path => ":rails_root/public/images/:id/:filename",
       :url => "/images/:id/:filename"
-    }
+  }
 end

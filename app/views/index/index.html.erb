@@ -1,3 +1,4 @@
+<% cache do %>
 <% content_for :title, "Hungry Foodies" %>
 <div id="myCarousel" class="carousel slide textFont">
       <div class="carousel-inner">
@@ -38,11 +39,14 @@
       <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
       <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
 </div><!-- /.carousel -->
+<% end %>
+
 <div class="container marketing">
 <% @posts.in_groups_of(3).each do |posts| %>
 <% posts.select! {|x| !x.nil?} %>
 <div class="row">
       <% posts.each do |post| %>
+      <% cache(post) do %>
       <div class="col-xs-4">
         <div class="postImagediv">
           <% imgId = "img"+post.id.to_s %>
@@ -53,13 +57,13 @@
               else
                   link_to image_tag(post.pictures.first.image.url,
           class: 'postImage',id:imgId, onload: callfunction), post
-              end
-              %>
+              end %>
           </div>
           <h2 class="titleFont"><%= post.title%></h2>
           <p class="scrollText"><%= post.content%></p>
           <p><%= link_to "View details", post %></p>
         </div><!-- /.span4 -->
+        <% end %>
         <%end%>
       </div><!-- /.row -->
     <%end%>
