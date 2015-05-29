@@ -41,6 +41,9 @@ gem 'bootstrap-sass', '~> 3.3.4'
 # Use paperclip to allow image uploads
 gem 'paperclip', :git => "git://github.com/thoughtbot/paperclip.git"
 
+#Use faker to create fake data in seeds.rb
+gem 'faker'
+
 # Store images on Amazon S3
 gem 'aws-sdk', '< 2.0'
 gem 'fog'
