@@ -24,7 +24,7 @@ userArray = Array.new
 
 number_of_users.times do |n|
     u = User.create!(email: "test"+n.to_s+"@test.com", password: "00000000", user_name: Faker::Name.name, gender: "Female", birthday: DateTime.parse('2015-04-18 20:27:05'), location: "Weyburn Terrace 785, Apt 072")
-    u.avatar = File.open("/Users/TIELONG/cs219/Newbie/app/assets/images/no_avatar.png")
+    u.avatar = File.open("/home/ec2-user/app/app/assets/images/no_avatar.png")
     u.save!
     userArray.push(u)
 end
