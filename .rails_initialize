@@ -3,3 +3,5 @@ rake ts:start
 rake ts:generate
 
 rake geocode:all CLASS=Post
+
+rake db:seed
