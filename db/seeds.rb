@@ -5,42 +5,68 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+require 'faker'
+
 User.delete_all
-100.times do |i|
-	User.create!(id: i, email: "test"+i.to_s+"@test.com", password: "00000000", user_name: "test"+i.to_s, gender: "Female", birthday: DateTime.parse('2015-04-18 20:27:05'), location: "Weyburn Terrace 785, Apt 072")
-end
-
 Post.delete_all
-1000.times do |i|
-	Post.create!(id: i,
-				 user_id: i/10, 
-				 title: "test post" + i.to_s, 
-				 datetime: DateTime.parse('2015-04-18 20:27:05'), 
-				 content: "test content", 
-				 post_image_file_name: 'thumb.jpg',
-				 post_image_content_type: 'image/jpeg',
-				 post_image_file_size: 81973,
-				 post_image_updated_at: DateTime.parse('2015-04-18 20:27:05'),
-				 created_at: DateTime.parse('2015-04-18 20:27:05'),
-				 latitude: '34.0637725',
-				 longitude: '-118.4515723',
-				 image_file_name: 'thumb.jpg',
-				 image_content_type: 'image/jpeg',
-				 image_file_size: 81973,
-				 image_updated_at: DateTime.parse('2015-04-18 20:27:05'),
-				 ip_address: "128.3.60.0")
-end
-
 Comment.delete_all
-5000.times do |i|
-	Comment.create!(id: i,
-					post_id: i/5,
-					user_id: i%100,
-					content: "test comment",
-					datetime: DateTime.parse('2015-04-18 20:27:05'),
-					created_at: DateTime.parse('2015-04-18 20:27:05'),
-					read: true)
+FavoritePost.delete_all
+Vote.delete_all
+
+number_of_users = 10
+number_of_posts_per_user = 10
+number_of_comments_per_post = 10
+number_of_upvotes_per_post = 20
+number_of_downvotes_per_post = 10
+number_of_favorite_per_post = 10
+
+number_of_users.times do |u|
+	User.create!(email: "test"+u.to_s+"@test.com", password: "00000000", user_name: Faker::Name.name, gender: "Female", birthday: DateTime.parse('2015-04-18 20:27:05'), location: "Weyburn Terrace 785, Apt 072")
+	number_of_posts_per_user.times do |i|
+		Post.create!(user_id: u, 
+					 title: Faker::Name.title, 
+					 datetime: DateTime.parse('2015-04-18 20:27:05'), 
+					 content: Faker::Lorem.paragraph, 
+					 post_image_file_name: 'thumb.jpg',
+					 post_image_content_type: 'image/jpeg',
+					 post_image_file_size: 81973,
+					 post_image_updated_at: DateTime.parse('2015-04-18 20:27:05'),
+					 created_at: DateTime.parse('2015-04-18 20:27:05'),
+					 latitude: '34.0637725',
+					 longitude: '-118.4515723',
+					 image_file_name: 'thumb.jpg',
+					 image_content_type: 'image/jpeg',
+					 image_file_size: 81973,
+					 image_updated_at: DateTime.parse('2015-04-18 20:27:05'),
+					 ip_address: Faker::Internet.ip_v4_address)
+		number_of_comments_per_post.times do |j|
+			Comment.create!(post_id: i,
+							user_id: u,
+							content: Faker::Lorem.paragraph,
+							datetime: DateTime.parse('2015-04-18 20:27:05'),
+							created_at: DateTime.parse('2015-04-18 20:27:05'),
+							read: true)
+		end
+		number_of_downvotes_per_post.times do
+			Vote.create!(post_id: i,
+						 user_id: u,
+						 label: true,
+						 created_at: DateTime.parse('2015-04-18 20:27:05'),
+						 updated_at: DateTime.parse('2015-04-18 20:27:05'))
+		end
+		number_of_downvotes_per_post.times do
+			Vote.create!(post_id: i,
+						 user_id: u,
+						 label: false,
+						 created_at: DateTime.parse('2015-04-18 20:27:05'),
+						 updated_at: DateTime.parse('2015-04-18 20:27:05'))
+		end
+		number_of_favorite_per_post.times do
+			FavoritePost.create!(post_id: i,
+								 user_id: u,
+								 created_at: DateTime.parse('2015-04-18 20:27:05'),
+								 updated_at: DateTime.parse('2015-04-18 20:27:05'))
+		end
+	end
 end
-
-Tagging.delete_all
-
