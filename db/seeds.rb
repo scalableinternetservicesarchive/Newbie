@@ -20,11 +20,17 @@ number_of_comments_per_post = 10
 number_of_upvotes_per_post = 20
 number_of_downvotes_per_post = 10
 number_of_favorite_per_post = 10
+userArray = Array.new
 
-number_of_users.times do |u|
-	User.create!(email: "test"+u.to_s+"@test.com", password: "00000000", user_name: Faker::Name.name, gender: "Female", birthday: DateTime.parse('2015-04-18 20:27:05'), location: "Weyburn Terrace 785, Apt 072")
-	number_of_posts_per_user.times do |i|
-		Post.create!(user_id: u, 
+number_of_users.times do |n|
+	u = User.create!(email: "test"+n.to_s+"@test.com", password: "00000000", user_name: Faker::Name.name, gender: "Female", birthday: DateTime.parse('2015-04-18 20:27:05'), location: "Weyburn Terrace 785, Apt 072")
+	userArray.push(u)
+end
+
+
+userArray.each do |u|
+	number_of_posts_per_user.times do
+		p = Post.create!(user_id: u.id,
 					 title: Faker::Name.title, 
 					 datetime: DateTime.parse('2015-04-18 20:27:05'), 
 					 content: Faker::Lorem.paragraph, 
@@ -39,32 +45,34 @@ number_of_users.times do |u|
 					 image_content_type: 'image/jpeg',
 					 image_file_size: 81973,
 					 image_updated_at: DateTime.parse('2015-04-18 20:27:05'),
-					 ip_address: Faker::Internet.ip_v4_address)
-		number_of_comments_per_post.times do |j|
-			Comment.create!(post_id: i,
-							user_id: u,
+					 ip_address: Faker::Internet.ip_v4_address,
+					 downvote_number: number_of_downvotes_per_post,
+					 upvote_number: number_of_upvotes_per_post)
+		number_of_comments_per_post.times do 
+			Comment.create!(post_id: p.id,
+							user_id: userArray.sample.id,
 							content: Faker::Lorem.paragraph,
 							datetime: DateTime.parse('2015-04-18 20:27:05'),
 							created_at: DateTime.parse('2015-04-18 20:27:05'),
 							read: true)
 		end
 		number_of_downvotes_per_post.times do
-			Vote.create!(post_id: i,
-						 user_id: u,
-						 label: true,
-						 created_at: DateTime.parse('2015-04-18 20:27:05'),
-						 updated_at: DateTime.parse('2015-04-18 20:27:05'))
-		end
-		number_of_downvotes_per_post.times do
-			Vote.create!(post_id: i,
-						 user_id: u,
+			Vote.create!(post_id: p.id,
+						 user_id: userArray.sample.id,
 						 label: false,
-						 created_at: DateTime.parse('2015-04-18 20:27:05'),
-						 updated_at: DateTime.parse('2015-04-18 20:27:05'))
+						 created_at: DateTime.parse('2015-05-18 20:27:05'),
+						 updated_at: DateTime.parse('2015-05-18 20:27:05'))
+		end
+		number_of_upvotes_per_post.times do
+			Vote.create!(post_id: p.id,
+						 user_id: userArray.sample.id,
+						 label: true,
+						 created_at: DateTime.parse('2015-05-18 20:27:05'),
+						 updated_at: DateTime.parse('2015-05-18 20:27:05'))
 		end
 		number_of_favorite_per_post.times do
-			FavoritePost.create!(post_id: i,
-								 user_id: u,
+			FavoritePost.create!(post_id: p.id,
+								 user_id: userArray.sample.id,
 								 created_at: DateTime.parse('2015-04-18 20:27:05'),
 								 updated_at: DateTime.parse('2015-04-18 20:27:05'))
 		end
