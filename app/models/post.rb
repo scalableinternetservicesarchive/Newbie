@@ -8,6 +8,8 @@ class Post < ActiveRecord::Base
     has_many :votes
     has_many :pictures, :dependent => :destroy
 
+    #has_and_belongs_to_many :tags
+
     acts_as_taggable
 
     geocoded_by :getAddress,

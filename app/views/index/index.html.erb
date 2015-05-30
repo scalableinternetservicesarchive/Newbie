@@ -38,6 +38,7 @@
       <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
       <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
 </div><!-- /.carousel -->
+
 <div class="container marketing">
 <% @posts.in_groups_of(3).each do |posts| %>
 <% posts.select! {|x| !x.nil?} %>
