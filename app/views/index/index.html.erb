@@ -1,4 +1,3 @@
-<% cache do %>
 <% content_for :title, "Hungry Foodies" %>
 <div id="myCarousel" class="carousel slide textFont">
       <div class="carousel-inner">
@@ -39,7 +38,6 @@
       <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
       <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
 </div><!-- /.carousel -->
-<% end %>
 
 <div class="container marketing">
 <% @posts.in_groups_of(3).each do |posts| %>
