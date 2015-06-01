@@ -5,6 +5,7 @@
   <div class="panel-body">
     <ul class="list-group">
 <% @comments.each do |comment| %>
+  <% cache(cache_key_for_comment(comment)) do %>
   <% url = "#collapseComment"+comment.id.to_s%>
       <li class="list-group-item  commentItem">
         <div class="row">
@@ -76,10 +77,13 @@
           </div>
       </div>
       </li>
+      <% end %>
+
       <%end%>
       </ul>
 </div>
 </div>
+
 <div class="panel panel-default">
   <div class="panel-heading">
     <h2 class="panel-title">Add a comment</h3>

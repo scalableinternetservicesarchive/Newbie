@@ -55,6 +55,7 @@
         });
         </script>
 
+    <% cache(cache_key_for_post(@post)) do %>
     <table class="table table-hover">
       <tr>
         <td class="col-xs-3">
@@ -69,8 +70,8 @@
           </div>
           <div class="row text-center">
             <%= link_to @post.user.user_name, "/users/profile/" + @post.user.id.to_s%>
-          </div>      
-        </td> 
+          </div>
+        </td>
         <td class="col-xs-9 postField">
           <div class="col-xs-10">
             <div class="row">
@@ -99,7 +100,7 @@
       <tr id = "maptr">
         <td colspan = "2">
           <div style='width: 100%;'>
-            <div id="map" style='width: 100%; height: 400px;'></div>
+            <div id="map" style='width: 50%; height: 400px;'></div>
           </div>
         </td>
       </tr>
@@ -146,6 +147,7 @@
         </td>
       </tr>
     </table>
+    <% end %>
   </div>
 </div>
   <%= render 'comments' %>

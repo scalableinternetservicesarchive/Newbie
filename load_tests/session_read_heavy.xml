@@ -9,7 +9,7 @@
 
   <!-- Server side setup -->
   <servers>
-    <server host="ec2-52-11-149-3.us-west-2.compute.amazonaws.com" port="80" type="tcp"></server>
+    <server host="Newbie-Memcached-601737385.us-west-2.elb.amazonaws.com" port="80" type="tcp"></server>
   </servers>
 
 
@@ -68,15 +68,14 @@
       <!-- wait for up to 2 seconds, user is looking at posts -->
       <thinktime value="2" random="true"></thinktime>
 
-      <!-- go to the hot posts page and wait 2 seconds-->
       <request>
-        <http url='/posts' version='1.1' method='GET'></http>
+        <http url='/showall' version='1.1' method='GET'></http>
       </request>
       <thinktime value="2" random="true"></thinktime>
 
       <!-- visit the test post on the website, which is the fish, and wait for 2 seconds-->
       <request>
-        <http url='/posts/2' version='1.1' method='GET'></http>
+        <http url='/posts/1' version='1.1' method='GET'></http>
       </request>
       <thinktime value="2" random="true"></thinktime>
 
@@ -92,15 +91,9 @@
       </request>
       <thinktime value="1" random="true"></thinktime>
 
-      <!-- perform a search on "fish", the page should return the test post -->
+      <!-- perform a search, the page should return the test post -->
       <request>
-        <http url='/search?search=fish' version='1.1' method='GET'></http>
-      </request>
-      <thinktime value="1" random="true"></thinktime>
-
-      <!-- visit the tag page -->
-      <request>
-        <http url='/tag/2' version='1.1' method='GET'></http>
+        <http url='/search?search=district' version='1.1' method='GET'></http>
       </request>
       <thinktime value="1" random="true"></thinktime>
 
