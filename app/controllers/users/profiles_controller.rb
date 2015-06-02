@@ -3,9 +3,11 @@ class Users::ProfilesController < ApplicationController
 	before_filter :authenticate_user!
 
 	def showCurrentUserProfile
+          if stale?([current_user, @user, @user.posts, notice, alert])
 		respond_to do |format|
 			format.html {render "users/profiles/profile"}
 		end
+          end
 	end
 
 	def showOtherUserProfile
@@ -17,9 +19,11 @@ class Users::ProfilesController < ApplicationController
 	end
 
 	def editProfile
+          if stale?([@user, notice, alert])
 		respond_to do |format|
 			format.html {render "users/profiles/edit_profile"}
 		end
+          end
 	end
 
 	def updateProfile
