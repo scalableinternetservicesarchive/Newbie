@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE tsung SYSTEM "/home/ec2-user/opt/tsung-1.5.0/share/tsung/tsung-1.0.dtd">
+
+<tsung loglevel="notice" version="1.0"> 
+  <!-- Client side setup -->  
+  <clients> 
+    <client host="localhost" use_controller_vm="true" maxusers="15000"/> 
+  </clients>  
+  <!-- Server side setup -->  
+  <servers> 
+    <server host="ec2-52-26-21-206.us-west-2.compute.amazonaws.com" port="80" type="tcp"/> 
+  </servers>  
+  <load> 
+    <arrivalphase phase="1" duration="1" unit="second"> 
+      <users arrivalrate="1" unit="second"/> 
+    </arrivalphase>  
+    <!--   
+           <arrivalphase phase="2" duration="30" unit="second">
+      <users arrivalrate="2" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="3" duration="30" unit="second">
+      <users arrivalrate="4" unit="second"></users>
+    </arrivalphase>
+        <arrivalphase phase="4" duration="30" unit="second">
+     <users arrivalrate="8" unit="second"></users>
+   </arrivalphase>
+   <arrivalphase phase="5" duration="30" unit="second">
+     <users arrivalrate="16" unit="second"></users>
+   --> 
+  </load>  
+  <options> 
+    <!-- Set connection timeout to 2 seconds -->  
+    <option name="glocal_ack_timeout" value="2000"/>  
+    <option name="accept" value="*/*"/> 
+    <option type="ts_http" name="user_agent"> 
+      <user_agent probability="100">Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</user_agent> 
+    </option> 
+  </options>  
+  <sessions> 
+    <!--first session if for user who log in-->
+    <session name="authorized" probability="0" type="ts_http"> 
+      <!-- user visit the main page and think for 2 seconds -->
+      <request> 
+        <http url="/" version="1.1" method="GET"/> 
+      </request>  
+      <thinktime value="2" random="true"/>  
+      <!-- user log in and think 1 sec -->
+      <request> 
+        <http url="/users/sign_in" version="1.1" method="GET"/> 
+      </request>  
+      <setdynvars sourcetype="random_number" start="1" end="10"> 
+        <var name="random_user_index"/> 
+      </setdynvars>  
+      <request subst="true"> 
+        <http url="/users/sign_in" version="1.1" method="POST" contents="user%5Bemail%5D=test%%_random_user_index%%%40test.com&amp;user%5Bpassword%5D=00000000&amp;user%5Bremember_me%5D=0&amp;commit=Log+in"></http> 
+      </request>  
+      <thinktime value="1" random="true"/> 
+      <!-- user see all the posts from page 1 to 10 -->
+      <request> 
+        <http url="/showall" version="1.1" method="GET"/> 
+      </request>  
+      <thinktime value="2" random="true"/> 
+      <for from="2" to="10" incr="1" var="pagenum"> 
+        <request subst="true"> 
+          <http url="/showall?page=%%_pagenum%%"/> 
+        </request>  
+        <thinktime value="2" random="true"/> 
+      </for>  
+      <!-- user see hot posts from page 1 to 5 -->
+      <request> 
+        <http url="/hot" version="1.1" method="GET"/> 
+      </request>  
+      <for from="1" to="5" incr="1" var="pagenum"> 
+        <request subst="true"> 
+          <http url="/hot?page=%%_pagenum%%"/> 
+        </request>  
+        <thinktime value="2" random="true"/> 
+      </for>  
+      <!-- user visit ten random posts -->
+      <for from="1" to="10" var="counter"> 
+        <setdynvars sourcetype="random_number" start="1" end="100"> 
+          <var name="random_post_id"/> 
+        </setdynvars>  
+        <request subst="true"> 
+          <http url="/posts/%%_random_post_id%%" version="1.1" method="GET"/> 
+        </request>  
+        <thinktime value="5" random="true"/> 
+      </for>  
+      <!-- user comment on 5 random posts -->
+      <for from="1" to="5" var="counter"> 
+        <setdynvars sourcetype="random_number" start="1" end="100"> 
+          <var name="random_post_id"/> 
+        </setdynvars>  
+        <setdynvars sourcetype="random_string" length="100"> 
+          <var name="comment_content"/> 
+        </setdynvars>  
+        <request subst="true"> 
+          <http url="/posts/%%_random_post_id%%/comments" version="1.1" method="POST" contents="comment%5Bcontent%5D=%%_comment_content%%&amp;commit=Submit"></http> 
+        </request>  
+        <thinktime value="5" random="true"/> 
+      </for>  
+      <!-- user create a post -->
+      <setdynvars sourcetype="eval" code="fun({Pid,DynVars})-&gt; [[13, 10]] end."> 
+        <var name="nl"/> 
+      </setdynvars>  
+      <setdynvars sourcetype="eval" code="fun({Pid,DynVars})-&gt;                 {ok, Bin} = file:read_file(&quot;post_test.jpeg&quot;),                 Bin               end."> 
+        <var name="attached_file"/> 
+      </setdynvars>  
+      <setdynvars sourcetype="random_number" start="1000" end="9999999"> 
+        <var name="random_post_title"/> 
+      </setdynvars>  
+      <setdynvars sourcetype="random_string" length="100"> 
+        <var name="post_content"/> 
+      </setdynvars>  
+      <request subst="true"> 
+        <http url="/posts" version="1.1" method="POST" content_type="multipart/form-data; boundary=----FormBoundary" contents="------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[title]&quot;%%_nl%%%%_nl%%%%_random_post_title%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[address]&quot;%%_nl%%%%_nl%%Weyburn Terrace 785%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(1i)]&quot;%%_nl%%%%_nl%%2015%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(2i)]&quot;%%_nl%%%%_nl%%6%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(3i)]&quot;%%_nl%%%%_nl%%2%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(4i)]&quot;%%_nl%%%%_nl%%03%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(5i)]&quot;%%_nl%%%%_nl%%42%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[content]&quot;%%_nl%%%%_nl%%%%_post_content%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;&quot;images[]&quot;; filename=&quot;post_test.jpeg&quot;%%_nl%%Content-Type: image/jpeg%%_nl%%%%_nl%%%%_attached_file%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[tag_list]&quot;%%_nl%%%%_nl%%tag1, tag2, tag3%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;commit&quot;%%_nl%%%%_nl%%New Post%%_nl%%------FormBoundary--%%_nl%%%%_nl%%"></http> 
+      </request>
+      <!-- user sign out -->
+      <request> 
+        <http url="/users/sign_out" version="1.1" contents="_method=delete" method="POST"></http> 
+      </request> 
+    </session>  
+
+
+
+
+    <!--this session is for user who signs up-->
+    <session name="signup" probability="100" type="ts_http"> 
+      <setdynvars sourcetype="eval" code="fun({Pid,DynVars})-&gt; [[13, 10]] end."> 
+        <var name="nl"/> 
+      </setdynvars>  
+      <setdynvars sourcetype="random_number" start="1000" end="9999999"> 
+        <var name="random_user_email"/> 
+      </setdynvars>  
+      <setdynvars sourcetype="random_string" length="12"> 
+        <var name="random_user_name"/> 
+      </setdynvars>  
+
+      <request> 
+        <http url="/" version="1.1" method="GET"/> 
+      </request>  
+      <thinktime value="2" random="true"/>  
+
+      <request> 
+        <http url="/users/sign_up" version="1.1" method="GET"/> 
+      </request> 
+      <thinktime value="2" random="true"/> 
+
+      <setdynvars sourcetype="random_number" start="1" end="10"> 
+        <var name="random_user_index"/> 
+      </setdynvars>  
+      <setdynvars sourcetype="eval" code="fun({Pid,DynVars})-&gt;                 {ok, Bin} = file:read_file(&quot;no_avatar.jpeg&quot;),                 Bin               end."> 
+        <var name="attached_file1"/> 
+      </setdynvars>  
+      <request subst="true"> 
+        <http url="/users" version="1.1" method="POST" content_type="multipart/form-data; boundary=----FormBoundary" contents="------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;user[email]&quot;%%_nl%%%%_nl%%%%_random_user_email%%@test.com%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;user[user_name]&quot;%%_nl%%%%_nl%%%%_random_user_name%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;user[password]&quot;%%_nl%%%%_nl%%00000000%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;user[password_confirmation]&quot;%%_nl%%%%_nl%%00000000%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;user[avatar]&quot;; filename=&quot;no_avatar.jpeg&quot;%%_nl%%Content-Type: image/jpeg%%_nl%%%%_nl%%%%_attached_file1%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;commit&quot;%%_nl%%%%_nl%%Sign up%%_nl%%------FormBoundary--%%_nl%%%%_nl%%"></http> 
+      </request>  
+      <thinktime value="2" random="true"/> 
+
+      <request> 
+        <http url="/showall" version="1.1" method="GET"/> 
+      </request>  
+      <thinktime value="2" random="true"/> 
+      <for from="2" to="10" incr="1" var="pagenum"> 
+        <request subst="true"> 
+          <http url="/showall?page=%%_pagenum%%"/> 
+        </request>  
+        <thinktime value="2" random="true"/> 
+      </for>  
+
+      <request> 
+        <http url="/hot" version="1.1" method="GET"/> 
+      </request>  
+      <thinktime value="2" random="true"/> 
+      <for from="1" to="5" incr="1" var="pagenum"> 
+        <request subst="true"> 
+          <http url="/hot?page=%%_pagenum%%"/> 
+        </request>  
+        <thinktime value="2" random="true"/> 
+      </for>  
+
+      <for from="1" to="10" var="counter"> 
+        <setdynvars sourcetype="random_number" start="1" end="100"> 
+          <var name="random_post_id"/> 
+        </setdynvars>  
+        <request subst="true"> 
+          <http url="/posts/%%_random_post_id%%" version="1.1" method="GET"/> 
+        </request>  
+        <thinktime value="5" random="true"/> 
+      </for>  
+
+      <for from="1" to="5" var="counter"> 
+        <setdynvars sourcetype="random_number" start="1" end="100"> 
+          <var name="random_post_id"/> 
+        </setdynvars>  
+        <setdynvars sourcetype="random_string" length="100"> 
+          <var name="comment_content"/> 
+        </setdynvars>  
+        <request subst="true"> 
+          <http url="/posts/%%_random_post_id%%/comments" version="1.1" method="POST" contents="comment%5Bcontent%5D=%%_comment_content%%&amp;commit=Submit"></http> 
+        </request>  
+        <thinktime value="5" random="true"/> 
+      </for>  
+
+      <for from="1" to="5" var="counter">
+        <setdynvars sourcetype="random_number" start="1" end="100">
+          <var name="random_post_id"/>
+        </setdynvars>
+        <request subst="true">
+          <http url="/votepost/up/%%_random_post_id%%" version="1.1" method="GET" content_type="text/javascript"/>
+        </request>
+        <thinktime value="5" random="true"/>
+      </for>
+
+      <for from="1" to="5" var="counter">
+        <setdynvars sourcetype="random_number" start="1" end="100">
+          <var name="random_post_id"/>
+        </setdynvars>
+        <request subst="true">
+          <http url="/votepost/down/%%_random_post_id%%" version="1.1" method="GET" content_type="text/javascript"/>
+        </request>
+        <thinktime value="5" random="true"/>
+      </for>
+
+      <for from="1" to="5" var="counter">
+        <setdynvars sourcetype="random_number" start="1" end="100">
+          <var name="random_post_id"/>
+        </setdynvars>
+        <request subst="true">
+          <http url="/favorite/%%_random_post_id%%" version="1.1" method="GET" content_type="text/javascript"/>
+        </request>
+        <thinktime value="5" random="true"/>
+      </for>
+
+      <setdynvars sourcetype="eval" code="fun({Pid,DynVars})-&gt;                 {ok, Bin} = file:read_file(&quot;post_test.jpeg&quot;),                 Bin               end."> 
+        <var name="attached_file2"/> 
+      </setdynvars>  
+      <setdynvars sourcetype="random_number" start="1000" end="9999999"> 
+        <var name="random_post_title"/> 
+      </setdynvars>  
+      <setdynvars sourcetype="random_string" length="100"> 
+        <var name="post_content"/> 
+      </setdynvars>  
+      <request subst="true"> 
+        <http url="/posts" version="1.1" method="POST" content_type="multipart/form-data; boundary=----FormBoundary" contents="------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[title]&quot;%%_nl%%%%_nl%%%%_random_post_title%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[address]&quot;%%_nl%%%%_nl%%Weyburn Terrace 785%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(1i)]&quot;%%_nl%%%%_nl%%2015%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(2i)]&quot;%%_nl%%%%_nl%%6%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(3i)]&quot;%%_nl%%%%_nl%%2%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(4i)]&quot;%%_nl%%%%_nl%%03%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(5i)]&quot;%%_nl%%%%_nl%%42%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[content]&quot;%%_nl%%%%_nl%%%%_post_content%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;&quot;images[]&quot;; filename=&quot;post_test.jpeg&quot;%%_nl%%Content-Type: image/jpeg%%_nl%%%%_nl%%%%_attached_file2%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[tag_list]&quot;%%_nl%%%%_nl%%tag1, tag2, tag3%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;commit&quot;%%_nl%%%%_nl%%New Post%%_nl%%------FormBoundary--%%_nl%%%%_nl%%"></http> 
+      </request>  
+
+      <request> 
+        <http url="/users/sign_out" version="1.1" contents="_method=delete" method="POST"></http> 
+      </request>  
+    </session>  
+
+
+
+
+    <!--this session is for user who don't sign in and just visits posts-->
+    <session name="only_get" probability="0" type="ts_http"> 
+      <request> 
+        <http url="/" version="1.1" method="GET"/> 
+      </request> 
+      <thinktime value="2" random="true"/> 
+      <request> 
+        <http url="/showall" version="1.1" method="GET"/> 
+      </request> 
+      <thinktime value="2" random="true"/> 
+      <for from="2" to="10" incr="1" var="pagenum"> 
+        <request subst="true"> 
+          <http url="/showall?page=%%_pagenum%%"/> 
+        </request>  
+        <thinktime value="2" random="true"/> 
+      </for>  
+      <request> 
+        <http url="/hot" version="1.1" method="GET"/> 
+      </request>  
+      <thinktime value="2" random="true"/> 
+      <for from="1" to="5" incr="1" var="pagenum"> 
+        <request subst="true"> 
+          <http url="/hot?page=%%_pagenum%%"/> 
+        </request>  
+        <thinktime value="2" random="true"/> 
+      </for>  
+    </session> 
+  </sessions> 
+</tsung>
