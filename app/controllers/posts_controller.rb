@@ -85,6 +85,7 @@ class PostsController < ApplicationController
       end
     end
     respond_to do |format|
+      format.html {render 'edit.js.erb'}
       format.js {render 'edit.js.erb'}
     end
   end
@@ -107,6 +108,7 @@ class PostsController < ApplicationController
       end
     end
     respond_to do |format|
+      format.html {render 'edit.js.erb'}
       format.js {render 'edit.js.erb'}
     end
   end
@@ -117,8 +119,10 @@ class PostsController < ApplicationController
         current_user.favorites.delete(@post)
     else
         current_user.favorites << @post
+        @flag = true
     end
     respond_to do |format|
+      format.html {render 'edit.js.erb'}
       format.js { render 'edit.js.erb' }
     end
   end
