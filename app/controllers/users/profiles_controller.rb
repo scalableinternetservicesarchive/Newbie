@@ -3,23 +3,20 @@ class Users::ProfilesController < ApplicationController
 	before_filter :authenticate_user!
 
 	def showCurrentUserProfile
-		@postCount = Post.where(user_id: @user.id).count
 		respond_to do |format|
 			format.html {render "users/profiles/profile"}
 		end
 	end
 
 	def showOtherUserProfile
-		@user = User.find(params[:id])
+		@user = User.eager_load(:posts).find(params[:id])
 		@id = params[:id].to_s
-		@postCount = Post.where(user_id: @user.id).count
 		respond_to do |format|
 			format.html {render "users/profiles/profile_other"}
 		end
 	end
 
 	def editProfile
-		@user = User.find(current_user.id)
 		respond_to do |format|
 			format.html {render "users/profiles/edit_profile"}
 		end
@@ -51,7 +48,7 @@ class Users::ProfilesController < ApplicationController
     end
 
     def set_user
-    	@user = User.find(current_user.id)
+    	@user = User.eager_load(:posts, :favorites).find(current_user.id)
     end
 
 end
