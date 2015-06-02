@@ -5,6 +5,7 @@ class PostsController < ApplicationController
 
   def listUserPost
     @posts = Post.where(user_id: params[:id]).paginate(:page =>params[:page], :per_page => 5).eager_load(:comments,:favorite_posts,:pictures).all
+    fresh_when([@posts, Comment.all, FavoritePost.all, current_user, alert, notice])
   end
 
   def listOwnPost
@@ -12,20 +13,24 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html {render :listUserPost}
     end
+    fresh_when([@posts, Comment.all, FavoritePost.all, current_user, alert, notice])
   end
 
 
   # GET /posts
   # GET /posts.json
   def index
-    @lat = request.location.latitude
-    @lon = request.location.longitude
-    @posts = Post.near(request.remote_ip.to_s, 20, order: :upvote_number).paginate(:page =>params[:page], :per_page => 5).eager_load(:comments,:favorite_posts,:pictures).all
+    if stale?([Post.all, Comment.all, FavoritePost.all, current_user, alert, notice])
+      @lat = request.location.latitude
+      @lon = request.location.longitude
+      @posts = Post.near(request.remote_ip.to_s, 20, order: :upvote_number).paginate(:page =>params[:page], :per_page => 5).eager_load(:comments,:favorite_posts,:pictures).all
+    end
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
+    fresh_when([@post, @post.comments, @post.pictures, current_user, alert, notice])
   end
 
   def view_comm
@@ -44,29 +49,36 @@ class PostsController < ApplicationController
   end
 
   def showall
-    @posts = Post.paginate(:page =>params[:page], :per_page => 5).eager_load(:comments,:favorite_posts,:pictures).all.order('posts.created_at DESC')
+    if stale?([Post.all, Comment.all, FavoritePost.all, current_user, alert, notice])
+      @posts = Post.paginate(:page =>params[:page], :per_page => 5).eager_load(:comments,:favorite_posts,:pictures).all.order('posts.created_at DESC')
+    end
   end
 
   def hot
-    @posts = Post.paginate(:page =>params[:page], :per_page => 5).eager_load(:comments,:favorite_posts,:pictures).all.order('upvote_number DESC')
+    if stale?([Post.all, Comment.all, FavoritePost.all, current_user, alert, notice])
+      @posts = Post.paginate(:page =>params[:page], :per_page => 5).eager_load(:comments,:favorite_posts,:pictures).all.order('upvote_number DESC')
+    end
   end
 
   def allUnreadComments
     @all_unread = Unreadcomment.where(user_id: current_user.id).eager_load(:comment,:replypost, :replycomment).all
+    fresh_when(@all_unread)
   end
 
   def allReadComments
     @all_read = Readcomment.where(user_id: current_user.id).eager_load(:comment,:replypost, :replycomment).all
+    fresh_when(@all_read)
   end
 
   # GET /posts/new
   def new
-    @post = Post.new
+    @post = Post.new if stale?([Post.all, current_user, alert, notice])
   end
 
   # GET /posts/1/edit
   def edit
   end
+
   def upvote
     @post = Post.find(params[:id]) 
     @d_vote = Vote.find_by(post_id: @post.id, user_id: current_user.id, label: false)
