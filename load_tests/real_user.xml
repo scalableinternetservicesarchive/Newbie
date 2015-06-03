@@ -8,7 +8,7 @@
   </clients>  
   <!-- Server side setup -->  
   <servers> 
-    <server host="ec2-52-26-21-206.us-west-2.compute.amazonaws.com" port="80" type="tcp"/> 
+    <server host="ec2-52-10-108-181.us-west-2.compute.amazonaws.com" port="80" type="tcp"/> 
   </servers>  
   <load> 
     <arrivalphase phase="1" duration="1" unit="second"> 
@@ -103,7 +103,7 @@
       <setdynvars sourcetype="eval" code="fun({Pid,DynVars})-&gt; [[13, 10]] end."> 
         <var name="nl"/> 
       </setdynvars>  
-      <setdynvars sourcetype="eval" code="fun({Pid,DynVars})-&gt;                 {ok, Bin} = file:read_file(&quot;post_test.jpeg&quot;),                 Bin               end."> 
+      <setdynvars sourcetype="eval" code="fun({Pid,DynVars})-&gt;                 {ok, Bin} = file:read_file(&quot;no_avatar.png&quot;),                 Bin               end."> 
         <var name="attached_file"/> 
       </setdynvars>  
       <setdynvars sourcetype="random_number" start="1000" end="9999999"> 
@@ -113,7 +113,7 @@
         <var name="post_content"/> 
       </setdynvars>  
       <request subst="true"> 
-        <http url="/posts" version="1.1" method="POST" content_type="multipart/form-data; boundary=----FormBoundary" contents="------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[title]&quot;%%_nl%%%%_nl%%%%_random_post_title%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[address]&quot;%%_nl%%%%_nl%%Weyburn Terrace 785%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(1i)]&quot;%%_nl%%%%_nl%%2015%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(2i)]&quot;%%_nl%%%%_nl%%6%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(3i)]&quot;%%_nl%%%%_nl%%2%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(4i)]&quot;%%_nl%%%%_nl%%03%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(5i)]&quot;%%_nl%%%%_nl%%42%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[content]&quot;%%_nl%%%%_nl%%%%_post_content%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;&quot;images[]&quot;; filename=&quot;post_test.jpeg&quot;%%_nl%%Content-Type: image/jpeg%%_nl%%%%_nl%%%%_attached_file%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[tag_list]&quot;%%_nl%%%%_nl%%tag1, tag2, tag3%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;commit&quot;%%_nl%%%%_nl%%New Post%%_nl%%------FormBoundary--%%_nl%%%%_nl%%"></http> 
+        <http url="/posts" version="1.1" method="POST" content_type="multipart/form-data; boundary=----FormBoundary" contents="------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[title]&quot;%%_nl%%%%_nl%%%%_random_post_title%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[address]&quot;%%_nl%%%%_nl%%Weyburn Terrace 785%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(1i)]&quot;%%_nl%%%%_nl%%2015%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(2i)]&quot;%%_nl%%%%_nl%%6%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(3i)]&quot;%%_nl%%%%_nl%%2%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(4i)]&quot;%%_nl%%%%_nl%%03%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(5i)]&quot;%%_nl%%%%_nl%%42%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[content]&quot;%%_nl%%%%_nl%%%%_post_content%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;&quot;images[]&quot;; filename=&quot;no_avatar.png&quot;%%_nl%%Content-Type: image/png%%_nl%%%%_nl%%%%_attached_file%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[tag_list]&quot;%%_nl%%%%_nl%%tag1, tag2, tag3%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;commit&quot;%%_nl%%%%_nl%%New Post%%_nl%%------FormBoundary--%%_nl%%%%_nl%%"></http> 
       </request>
       <!-- user sign out -->
       <request> 
@@ -149,11 +149,11 @@
       <setdynvars sourcetype="random_number" start="1" end="10"> 
         <var name="random_user_index"/> 
       </setdynvars>  
-      <setdynvars sourcetype="eval" code="fun({Pid,DynVars})-&gt;                 {ok, Bin} = file:read_file(&quot;no_avatar.jpeg&quot;),                 Bin               end."> 
+      <setdynvars sourcetype="eval" code="fun({Pid,DynVars})-&gt;                 {ok, Bin} = file:read_file(&quot;no_avatar.png&quot;),                 Bin               end."> 
         <var name="attached_file1"/> 
       </setdynvars>  
       <request subst="true"> 
-        <http url="/users" version="1.1" method="POST" content_type="multipart/form-data; boundary=----FormBoundary" contents="------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;user[email]&quot;%%_nl%%%%_nl%%%%_random_user_email%%@test.com%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;user[user_name]&quot;%%_nl%%%%_nl%%%%_random_user_name%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;user[password]&quot;%%_nl%%%%_nl%%00000000%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;user[password_confirmation]&quot;%%_nl%%%%_nl%%00000000%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;user[avatar]&quot;; filename=&quot;no_avatar.jpeg&quot;%%_nl%%Content-Type: image/jpeg%%_nl%%%%_nl%%%%_attached_file1%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;commit&quot;%%_nl%%%%_nl%%Sign up%%_nl%%------FormBoundary--%%_nl%%%%_nl%%"></http> 
+        <http url="/users" version="1.1" method="POST" content_type="multipart/form-data; boundary=----FormBoundary" contents="------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;user[email]&quot;%%_nl%%%%_nl%%%%_random_user_email%%@test.com%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;user[user_name]&quot;%%_nl%%%%_nl%%%%_random_user_name%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;user[password]&quot;%%_nl%%%%_nl%%00000000%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;user[password_confirmation]&quot;%%_nl%%%%_nl%%00000000%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;user[avatar]&quot;; filename=&quot;no_avatar.png&quot;%%_nl%%Content-Type: image/png%%_nl%%%%_nl%%%%_attached_file1%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;commit&quot;%%_nl%%%%_nl%%Sign up%%_nl%%------FormBoundary--%%_nl%%%%_nl%%"></http> 
       </request>  
       <thinktime value="2" random="true"/> 
 
@@ -178,6 +178,27 @@
         </request>  
         <thinktime value="2" random="true"/> 
       </for>  
+
+
+      <for from="1" to="5" var="counter"> 
+        <setdynvars sourcetype="random_number" start="1" end="100"> 
+          <var name="random_profile_id"/> 
+        </setdynvars>  
+        <request subst="true"> 
+            <http url="/users/profile/%%_random_profile_id%%" version="1.1" method="GET"/> 
+        </request>  
+        <thinktime value="5" random="true"/> 
+      </for>
+
+      <for from="1" to="5" var="counter"> 
+        <setdynvars sourcetype="random_number" start="1" end="100"> 
+          <var name="random_tag_id"/> 
+        </setdynvars>  
+        <request subst="true"> 
+            <http url="/tag/%%_random_tag_id%%" version="1.1" method="GET"/> 
+        </request>  
+        <thinktime value="5" random="true"/> 
+      </for>
 
       <for from="1" to="10" var="counter"> 
         <setdynvars sourcetype="random_number" start="1" end="100"> 
@@ -232,7 +253,7 @@
         <thinktime value="5" random="true"/>
       </for>
 
-      <setdynvars sourcetype="eval" code="fun({Pid,DynVars})-&gt;                 {ok, Bin} = file:read_file(&quot;post_test.jpeg&quot;),                 Bin               end."> 
+      <setdynvars sourcetype="eval" code="fun({Pid,DynVars})-&gt;                 {ok, Bin} = file:read_file(&quot;no_avatar.png&quot;),                 Bin               end."> 
         <var name="attached_file2"/> 
       </setdynvars>  
       <setdynvars sourcetype="random_number" start="1000" end="9999999"> 
@@ -242,7 +263,7 @@
         <var name="post_content"/> 
       </setdynvars>  
       <request subst="true"> 
-        <http url="/posts" version="1.1" method="POST" content_type="multipart/form-data; boundary=----FormBoundary" contents="------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[title]&quot;%%_nl%%%%_nl%%%%_random_post_title%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[address]&quot;%%_nl%%%%_nl%%Weyburn Terrace 785%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(1i)]&quot;%%_nl%%%%_nl%%2015%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(2i)]&quot;%%_nl%%%%_nl%%6%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(3i)]&quot;%%_nl%%%%_nl%%2%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(4i)]&quot;%%_nl%%%%_nl%%03%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(5i)]&quot;%%_nl%%%%_nl%%42%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[content]&quot;%%_nl%%%%_nl%%%%_post_content%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;&quot;images[]&quot;; filename=&quot;post_test.jpeg&quot;%%_nl%%Content-Type: image/jpeg%%_nl%%%%_nl%%%%_attached_file2%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[tag_list]&quot;%%_nl%%%%_nl%%tag1, tag2, tag3%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;commit&quot;%%_nl%%%%_nl%%New Post%%_nl%%------FormBoundary--%%_nl%%%%_nl%%"></http> 
+        <http url="/posts" version="1.1" method="POST" content_type="multipart/form-data; boundary=----FormBoundary" contents="------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[title]&quot;%%_nl%%%%_nl%%%%_random_post_title%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[address]&quot;%%_nl%%%%_nl%%Weyburn Terrace 785%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(1i)]&quot;%%_nl%%%%_nl%%2015%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(2i)]&quot;%%_nl%%%%_nl%%6%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(3i)]&quot;%%_nl%%%%_nl%%2%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(4i)]&quot;%%_nl%%%%_nl%%03%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(5i)]&quot;%%_nl%%%%_nl%%42%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[content]&quot;%%_nl%%%%_nl%%%%_post_content%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;&quot;images[]&quot;; filename=&quot;no_avatar.png&quot;%%_nl%%Content-Type: image/png%%_nl%%%%_nl%%%%_attached_file2%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[tag_list]&quot;%%_nl%%%%_nl%%tag1, tag2, tag3%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;commit&quot;%%_nl%%%%_nl%%New Post%%_nl%%------FormBoundary--%%_nl%%%%_nl%%"></http> 
       </request>  
 
       <request> 
