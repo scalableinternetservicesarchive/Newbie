@@ -8,27 +8,28 @@
 
 require 'faker'
 
-User.delete_all
-Post.delete_all
-Comment.delete_all
-FavoritePost.delete_all
-Vote.delete_all
-
 number_of_users = 10
+number_of_tags = 100
 number_of_posts_per_user = 10
 number_of_comments_per_post = 10
 number_of_upvotes_per_post = 20
 number_of_downvotes_per_post = 10
 number_of_favorite_per_post = 10
+number_of_tags_per_post = 3
 userArray = Array.new
+tagArray = Array.new
 
 number_of_users.times do |n|
     u = User.create!(email: "test"+n.to_s+"@test.com", password: "00000000", user_name: Faker::Name.name, gender: "Female", birthday: DateTime.parse('2015-04-18 20:27:05'), location: "Weyburn Terrace 785, Apt 072")
-    u.avatar = File.open("/home/ec2-user/app/app/assets/images/no_avatar.png")
+    u.avatar = File.open("/Users/bianpengyuan/Dropbox/219/Newbie/app/assets/images/no_avatar.png")
     u.save!
     userArray.push(u)
 end
 
+number_of_tags.times do |t|
+    t = Tag.create!(name: Faker::Name.name)
+    tagArray.push(t)
+end
 
 userArray.each do |u|
     number_of_posts_per_user.times do
@@ -55,6 +56,14 @@ userArray.each do |u|
                             created_at: DateTime.parse('2015-04-18 20:27:05'),
                             read: true)
         end
+
+        number_of_tags_per_post.times do
+            sample_tag = tagArray.sample
+            ActiveRecord::Base.connection.execute("INSERT INTO `taggings` (`tag_id`, `context`, `taggable_id`, `taggable_type`, `created_at`) VALUES (" + sample_tag.id.to_s + ", 'tags', " + p.id.to_s + ", 'Post', '2015-06-03 04:46:23')")
+            tag = Tag.find_by_name(sample_tag.name)
+            tag.update_attributes!(taggings_count: tag.taggings_count+1)
+        end
+
         number_of_downvotes_per_post.times do
             Vote.create!(post_id: p.id,
                          user_id: userArray.sample.id,
@@ -64,14 +73,14 @@ userArray.each do |u|
         end
         number_of_upvotes_per_post.times do
             Vote.create!(post_id: p.id,
-                         user_id: userArray.sample.id,
+                         user_id: Faker::Number.number(9),
                          label: true,
                          created_at: DateTime.parse('2015-05-18 20:27:05'),
                          updated_at: DateTime.parse('2015-05-18 20:27:05'))
         end
         number_of_favorite_per_post.times do
             FavoritePost.create!(post_id: p.id,
-                                 user_id: userArray.sample.id,
+                                 user_id: Faker::Number.number(9),
                                  created_at: DateTime.parse('2015-04-18 20:27:05'),
                                  updated_at: DateTime.parse('2015-04-18 20:27:05'))
         end
