@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_user!, except: [:show, :index, :showall]
+  before_filter :authenticate_user!, except: [:show, :index, :showall, :hot]
   before_filter :correct_user, only: [:edit, :update, :destroy]
 
   def listUserPost
