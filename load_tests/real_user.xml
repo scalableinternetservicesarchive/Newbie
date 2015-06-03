@@ -8,7 +8,7 @@
   </clients>  
   <!-- Server side setup -->  
   <servers> 
-    <server host="ec2-52-10-108-181.us-west-2.compute.amazonaws.com" port="80" type="tcp"/> 
+    <server host="ec2-52-11-48-198.us-west-2.compute.amazonaws.com" port="80" type="tcp"/> 
   </servers>  
   <load> 
     <arrivalphase phase="1" duration="1" unit="second"> 
@@ -38,7 +38,7 @@
   </options>  
   <sessions> 
     <!--first session if for user who log in-->
-    <session name="authorized" probability="0" type="ts_http"> 
+    <session name="authorized" probability="40" type="ts_http"> 
       <!-- user visit the main page and think for 2 seconds -->
       <request> 
         <http url="/" version="1.1" method="GET"/> 
@@ -113,8 +113,16 @@
         <var name="post_content"/> 
       </setdynvars>  
       <request subst="true"> 
+        <dyn_variable name="created_post_id" re="[Ll]ocation: http://.*/posts/(.*)\r"/>
         <http url="/posts" version="1.1" method="POST" content_type="multipart/form-data; boundary=----FormBoundary" contents="------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[title]&quot;%%_nl%%%%_nl%%%%_random_post_title%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[address]&quot;%%_nl%%%%_nl%%Weyburn Terrace 785%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(1i)]&quot;%%_nl%%%%_nl%%2015%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(2i)]&quot;%%_nl%%%%_nl%%6%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(3i)]&quot;%%_nl%%%%_nl%%2%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(4i)]&quot;%%_nl%%%%_nl%%03%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[datetime(5i)]&quot;%%_nl%%%%_nl%%42%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[content]&quot;%%_nl%%%%_nl%%%%_post_content%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;&quot;images[]&quot;; filename=&quot;no_avatar.png&quot;%%_nl%%Content-Type: image/png%%_nl%%%%_nl%%%%_attached_file%%%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;post[tag_list]&quot;%%_nl%%%%_nl%%tag1, tag2, tag3%%_nl%%------FormBoundary%%_nl%%Content-Disposition: form-data; name=&quot;commit&quot;%%_nl%%%%_nl%%New Post%%_nl%%------FormBoundary--%%_nl%%%%_nl%%"></http> 
       </request>
+      <thinktime value="5" random="true"/> 
+
+      <request subst="true">
+        <http url="/posts/%%_created_post_id%%" method="DELETE">
+        </http>
+      </request>
+      <thinktime value="5" random="true"/> 
       <!-- user sign out -->
       <request> 
         <http url="/users/sign_out" version="1.1" contents="_method=delete" method="POST"></http> 
@@ -125,7 +133,7 @@
 
 
     <!--this session is for user who signs up-->
-    <session name="signup" probability="100" type="ts_http"> 
+    <session name="signup" probability="10" type="ts_http"> 
       <setdynvars sourcetype="eval" code="fun({Pid,DynVars})-&gt; [[13, 10]] end."> 
         <var name="nl"/> 
       </setdynvars>  
@@ -275,7 +283,7 @@
 
 
     <!--this session is for user who don't sign in and just visits posts-->
-    <session name="only_get" probability="0" type="ts_http"> 
+    <session name="only_get" probability="50" type="ts_http"> 
       <request> 
         <http url="/" version="1.1" method="GET"/> 
       </request> 
