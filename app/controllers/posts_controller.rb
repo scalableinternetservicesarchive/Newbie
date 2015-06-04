@@ -5,7 +5,6 @@ class PostsController < ApplicationController
 
   def listUserPost
     @posts = Post.where(user_id: params[:id]).paginate(:page =>params[:page], :per_page => 5).eager_load(:comments,:favorite_posts,:pictures).all
-    fresh_when([@posts, Comment.all, FavoritePost.all, current_user, alert, notice])
   end
 
   def listOwnPost
@@ -13,18 +12,14 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html {render :listUserPost}
     end
-    fresh_when([@posts, Comment.all, FavoritePost.all, current_user, alert, notice])
   end
-
 
   # GET /posts
   # GET /posts.json
   def index
-    if stale?([Post.all, Comment.all, FavoritePost.all, current_user, alert, notice])
-      @lat = request.location.latitude
-      @lon = request.location.longitude
-      @posts = Post.near(request.remote_ip.to_s, 20, order: :upvote_number).paginate(:page =>params[:page], :per_page => 5).eager_load(:comments,:favorite_posts,:pictures).all
-    end
+    @lat = request.location.latitude
+    @lon = request.location.longitude
+    @posts = Post.near(request.remote_ip.to_s, 20, order: :upvote_number).paginate(:page =>params[:page], :per_page => 5).eager_load(:comments,:favorite_posts,:pictures).all
   end
 
   # GET /posts/1
@@ -49,15 +44,11 @@ class PostsController < ApplicationController
   end
 
   def showall
-    if stale?([Post.all, Comment.all, FavoritePost.all, current_user, alert, notice])
-      @posts = Post.paginate(:page =>params[:page], :per_page => 5).eager_load(:comments,:favorite_posts,:pictures).all.order('posts.created_at DESC')
-    end
+    @posts = Post.paginate(:page =>params[:page], :per_page => 5).eager_load(:comments,:favorite_posts,:pictures).all.order('posts.created_at DESC')
   end
 
   def hot
-    if stale?([Post.all, Comment.all, FavoritePost.all, current_user, alert, notice])
-      @posts = Post.paginate(:page =>params[:page], :per_page => 5).eager_load(:comments,:favorite_posts,:pictures).all.order('upvote_number DESC')
-    end
+    @posts = Post.paginate(:page =>params[:page], :per_page => 5).eager_load(:comments,:favorite_posts,:pictures).all.order('upvote_number DESC')
   end
 
   def allUnreadComments
