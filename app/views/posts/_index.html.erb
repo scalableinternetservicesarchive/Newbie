@@ -1,5 +1,6 @@
 <div class="col-xs-9">
-<% @posts.each do |post| %>
+  <% @posts.each do |post| %>
+  <% cache(cache_key_for_post(post)) do%>
 <div class="row" name="post">
 <table class="table table-hover">
     <tr>
@@ -67,6 +68,7 @@
     </tr>
     </table>
 </div>
+<% end %>
     <% end %>
 
     <br>
