@@ -8,7 +8,7 @@
 
 require 'faker'
 
-number_of_users = 10
+number_of_users = 1000
 number_of_tags = 100
 number_of_posts_per_user = 10
 number_of_comments_per_post = 10
@@ -21,9 +21,11 @@ tagArray = Array.new
 
 number_of_users.times do |n|
     u = User.create!(email: "test"+n.to_s+"@test.com", password: "00000000", user_name: Faker::Name.name, gender: "Female", birthday: DateTime.parse('2015-04-18 20:27:05'), location: "Weyburn Terrace 785, Apt 072")
-    u.avatar = File.open("/Users/bianpengyuan/Dropbox/219/Newbie/app/assets/images/no_avatar.png")
+    file = File.open("app/assets/images/Angela_Baby.jpg")
+    u.avatar = file
     u.save!
     userArray.push(u)
+    file.close
 end
 
 number_of_tags.times do |t|
@@ -40,7 +42,7 @@ userArray.each do |u|
                      created_at: DateTime.parse('2015-04-18 20:27:05'),
                      latitude: '34.0637725',
                      longitude: '-118.4515723',
-                     image_file_name: 'default.png',
+                     image_file_name: '4.jpg',
                      image_content_type: 'image/jpeg',
                      image_file_size: 81973,
                      image_updated_at: DateTime.parse('2015-04-18 20:27:05'),
